@@ -12,10 +12,10 @@ const Navbar = () => {
 
   return (
     <header className="relative z-50 bg-white shadow-md">
-      <nav className="flex items-center justify-between w-[92%] mx-auto py-3 relative">
+      <nav className="flex items-center justify-between w-[92%] mx-auto  relative">
         {/* Logo */}
         <div>
-          <img src={logo} alt="Logo" className="h-24" />
+          <img src={logo} alt="Logo" className="h-20" />
         </div>
 
         {/* Desktop Menu (only above 900px) */}

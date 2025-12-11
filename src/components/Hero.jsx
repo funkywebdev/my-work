@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Frame9 from '../assets/images/Frame9.png';
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -39,12 +40,22 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6 }}
         >
-          <button className="bg-[#001489] text-white px-6 py-2 rounded-md hover:bg-[#001060] transition">
+          <Link
+            to="/registration"
+            className="bg-[#001489] text-white px-6 py-2 rounded-md hover:bg-[#001060] transition inline-block"
+          >
             Register Now
-          </button>
-          <button className="border border-[#001489] text-[#001489] px-6 py-2 rounded-md hover:bg-[#001489] hover:text-white transition">
-            View Leaderboard
-          </button>
+          </Link>
+          
+
+            <Link
+              to="/login"
+              className="border border-[#001489] text-[#001489] px-6 py-2 rounded-md 
+                        hover:bg-[#001489] hover:text-white transition inline-block"
+            >
+              Login
+            </Link>
+
         </motion.div>
       </motion.div>
 

@@ -36,22 +36,7 @@ const Dashboard = () => {
 
   return (
     <div className="">
-    <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {stats.map((item, index) => (
-        <div
-          key={index}
-          className={`${item.color} text-white p-4 rounded-xl flex sm:block  items-center gap-4 shadow-lg`}
-        >
-          <div className="text-white">{item.icon}</div>
-
-          <div>
-            <p className="text-sm font-medium">{item.label}</p>
-            <p className="text-2xl font-bold">{item.value}</p>
-          </div>
-        </div>
-        
-      ))}
-    </div>
+    
     <Ranking />
     </div>
   );

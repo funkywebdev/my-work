@@ -1,6 +1,7 @@
 import React from "react";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Compete = () => {
   return (
@@ -31,11 +32,19 @@ const Compete = () => {
           .
         </motion.p>
 
+
         <div className="mt-6">
-          <button className="bg-[#001489] text-white px-6 py-3 sm:px-8 sm:py-4 text-xs sm:text-sm md:text-base font-semibold rounded-md shadow-md hover:bg-[#001acb] transition-all duration-300">
+          <Link
+            to="/registration"
+            className="bg-[#001489] text-white px-6 py-3 sm:px-8 sm:py-4 
+                      text-xs sm:text-sm md:text-base font-semibold rounded-md 
+                      shadow-md hover:bg-[#001acb] transition-all duration-300 inline-block"
+          >
             Register Your School Now
-          </button>
+          </Link>
         </div>
+
+      
       </div>
     </div>
   );

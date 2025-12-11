@@ -1,14 +1,12 @@
 import React from 'react';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer';
+import Bql from '../../components/Bql'
 import AdminLogin from '../../components/admin-components/AdminLogin';
 
 const AdminloginPage = () => {
   return (
-    <div>
-     <Navbar />
+    <div>    
+      <Bql /> 
       <AdminLogin />
-      <Footer /> 
     </div>
   )
 }

@@ -1,110 +1,570 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import Clip from "../../assets/images/Clip.png";
-import medal from "../../assets/images/medal.png";
-import medal2 from "../../assets/images/medal2.png";
-import Vector from "../../assets/images/Vector.png";
-import stream from "../../assets/images/stream.png";
 
-const leaderboardTabs = ["Overall", "Biology", "Physics", "Chemistry", "Mathematics", "English"];
 
-const detailedLeaderboard = [
-  { rank: 1, school: "Aro Odo Grammar School", points: 2845, color: "#F29700", category: "Biology" },
-  { rank: 2, school: "Anglican Comprehensive High School", points: 2780, color: "#A8B6CA", category: "Physics" },
-  { rank: 3, school: "Sundest Progressive College", points: 2705, color: "#A73A00", category: "Chemistry" },
-  { rank: 4, school: "Kings College, Lagos", points: 2650, color: "#0077B6", category: "Mathematics" },
-  { rank: 5, school: "Bright Future Academy", points: 2600, color: "#FF6B6B", category: "English" },
-  { rank: 6, school: "St. Mary's Academy, Ibadan", points: 2555, color: "#6A0572", category: "Biology" },
-  { rank: 7, school: "Hilltop International School", points: 2500, color: "#008080", category: "Physics" },
-  { rank: 8, school: "Greenfield College, Ibadan", points: 2450, color: "#FFA500", category: "Chemistry" },
-  { rank: 9, school: "Royal College, Lagos", points: 2400, color: "#800080", category: "Mathematics" },
-  { rank: 10, school: "Future Leaders Academy, Abuja", points: 2350, color: "#00BFFF", category: "English" },
-];
+// import React, { useEffect, useState } from "react";
+// import axios from "axios";
+// import { FaSchool, FaRegQuestionCircle } from "react-icons/fa";
+// import { RiLiveLine } from "react-icons/ri";
+// import { FaUserGraduate } from "react-icons/fa6";
+// import { CiSearch } from "react-icons/ci";
 
-const leaderboardIcons = { Vector, stream }; // Use your imported images
+// const Dashboard = () => {
+//   const [students, setStudents] = useState([]);
+//   const [schools, setSchools] = useState([]);
 
-const Ranking = () => {
-  const [activeTab, setActiveTab] = useState("Overall");
+//   // TOP CARDS STATS
+//   const [stats, setStats] = useState({
+//     totalSchools: 0,
+//     questionsAsked: 0,
+//     activeMatches: 0,
+//     activeStudents: 0,
+//   });
 
-  const tabVariants = { hover: { scale: 1.05 }, tap: { scale: 0.95 } };
-  const leaderboardVariants = {
-    hidden: { opacity: 0, x: -50 },
-    visible: (custom) => ({
-      opacity: 1,
-      x: 0,
-      transition: { delay: custom * 0.05, duration: 0.4 },
-    }),
-    hover: { scale: 1.02, boxShadow: "0px 8px 20px rgba(0,0,0,0.15)" },
+//   const [selectedSchool, setSelectedSchool] = useState(
+//     localStorage.getItem("schoolId") || ""
+//   );
+
+//   const [gradeLevel, setGradeLevel] = useState("");
+//   const [activeTab, setActiveTab] = useState("All");
+//   const [loading, setLoading] = useState(false);
+
+//   const [search, setSearch] = useState("");
+
+//   const authToken = localStorage.getItem("adminToken");
+//   const baseUrl = "https://bql-production.up.railway.app";
+
+//   /** ------------------------
+//    * FETCH SCHOOLS
+//    ------------------------ **/
+//   const fetchSchools = async () => {
+//     try {
+//       const { data } = await axios.get(`${baseUrl}/schools`, {
+//         headers: { Authorization: `Bearer ${authToken}` },
+//       });
+
+//       setSchools(data);
+//       setStats((prev) => ({ ...prev, totalSchools: data.length }));
+//     } catch (err) {
+//       console.log("Error fetching schools:", err);
+//     }
+//   };
+
+//   /** ------------------------
+//    * FETCH STATS
+//    ------------------------ **/
+//   const fetchStats = async () => {
+//     try {
+//       const { data } = await axios.get(`${baseUrl}/students/all`, {
+//         headers: { Authorization: `Bearer ${authToken}` },
+//       });
+
+//       setStats((prev) => ({
+//         ...prev,
+//         activeStudents: data.length,
+//         questionsAsked: data.length * 10,
+//         activeMatches: Math.floor(data.length / 5),
+//       }));
+//     } catch (err) {
+//       console.log("Error fetching stats:", err);
+//     }
+//   };
+
+//   /** ------------------------
+//    * FETCH STUDENTS
+//    ------------------------ **/
+//   const fetchStudents = async () => {
+//     setLoading(true);
+
+//     try {
+//       let url = `${baseUrl}/students/all`;
+
+//       if (activeTab === "By School" && selectedSchool) {
+//         url = `${baseUrl}/students?schoolId=${selectedSchool}`;
+//       }
+
+//       if (activeTab === "By Grade" && selectedSchool && gradeLevel) {
+//         url = `${baseUrl}/students?schoolId=${selectedSchool}&gradeLevel=${gradeLevel}`;
+//       }
+
+//       const { data } = await axios.get(url, {
+//         headers: { Authorization: `Bearer ${authToken}` },
+//       });
+
+//       setStudents(data);
+//     } catch (err) {
+//       console.log("Error fetching students:", err);
+//     }
+
+//     setLoading(false);
+//   };
+
+//   /** ------------------------
+//    * FETCH COUNT
+//    ------------------------ **/
+//   const fetchStudentCount = async () => {
+//     if (!selectedSchool) return;
+//     setLoading(true);
+
+//     try {
+//       const { data } = await axios.get(
+//         `${baseUrl}/students/school/${selectedSchool}/count`,
+//         { headers: { Authorization: `Bearer ${authToken}` } }
+//       );
+
+//       setStudents([{ count: data.count }]);
+//     } catch (err) {
+//       console.log("Error fetching count:", err);
+//     }
+
+//     setLoading(false);
+//   };
+
+//   /** ------------------------
+//    * USE EFFECTS
+//    ------------------------ **/
+//   useEffect(() => {
+//     fetchSchools();
+//     fetchStats();
+//   }, []);
+
+//   useEffect(() => {
+//     if (activeTab === "Count") {
+//       fetchStudentCount();
+//     } else {
+//       fetchStudents();
+//     }
+//   }, [activeTab, selectedSchool, gradeLevel]);
+
+//   /** ------------------------
+//    * SEARCH FILTER
+//    ------------------------ **/
+//   const filteredStudents =
+//     activeTab === "Count"
+//       ? students
+//       : students.filter((s) =>
+//           s.name?.toLowerCase().includes(search.toLowerCase())
+//         );
+
+//   /** ------------------------
+//    * UI
+//    ------------------------ **/
+//   return (
+//     <div className="w-full">
+      
+//       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+//         <div className="bg-[#1115CB] text-white p-4 rounded-xl shadow flex flex-col items-start">
+//           <FaSchool size={26} className="mb-2" />
+//           <p className="text-sm font-medium">Total Schools</p>
+//           <p className="text-2xl font-bold">{stats.totalSchools}</p>
+//         </div>
+
+//         <div className="bg-black text-white p-4 rounded-xl shadow flex flex-col items-start">
+//           <FaRegQuestionCircle size={26} className="mb-2" />
+//           <p className="text-sm font-medium">Questions Asked</p>
+//           <p className="text-2xl font-bold">{stats.questionsAsked}</p>
+//         </div>
+
+//         <div className="bg-[#C837AB] text-white p-4 rounded-xl shadow flex flex-col items-start">
+//           <RiLiveLine size={26} className="mb-2" />
+//           <p className="text-sm font-medium">Active Matches</p>
+//           <p className="text-2xl font-bold">{stats.activeMatches}</p>
+//         </div>
+
+//         <div className="bg-[#641408] text-white p-4 rounded-xl shadow flex flex-col items-start">
+//           <FaUserGraduate size={26} className="mb-2" />
+//           <p className="text-sm font-medium">Active Students</p>
+//           <p className="text-2xl font-bold">{stats.activeStudents}</p>
+//         </div>
+//       </div>
+
+      
+
+//       {/* TABS */}
+//       <div className=" gap-2 mb-4 overflow-x-auto grid grid-cols-2 sm:grid-cols-4">
+//         {["All", "By School", "By Grade", "Count"].map((tab) => (
+//           <button
+//             key={tab}
+//             onClick={() => setActiveTab(tab)}
+//             className={`px-4 py-2 rounded-full text-sm font-medium ${
+//               activeTab === tab
+//                 ? "bg-[#001489] text-white"
+//                 : "bg-gray-200 text-gray-700"
+//             }`}
+//           >
+//             {tab}
+//           </button>
+//         ))}
+//       </div>
+
+//       {/* SEARCH BAR ALWAYS VISIBLE */}
+//       <div className="relative w-full mb-4">
+//         <CiSearch className="absolute left-3 top-3 text-gray-500" size={20} />
+//         <input
+//           type="text"
+//           placeholder="Search student by name"
+//           value={search}
+//           onChange={(e) => setSearch(e.target.value)}
+//           className="w-full pl-10 pr-3 py-2 border rounded text-sm"
+//         />
+//       </div>
+
+//       {/* FILTERS VISIBLE IN BY SCHOOL + BY GRADE + COUNT*/}
+//       {(activeTab === "By School" ||
+//         activeTab === "By Grade" ||
+//         activeTab === "Count") && (
+//         <div className="grid grid-cols-2 gap-3 mb-4">
+//           <select
+//             value={selectedSchool}
+//             onChange={(e) => setSelectedSchool(e.target.value)}
+//             className="border px-3 py-2 rounded text-sm"
+//           >
+//             <option value="">Select School</option>
+//             {schools.map((s) => (
+//               <option key={s.id} value={s.id}>
+//                 {s.name}
+//               </option>
+//             ))}
+//           </select>
+
+//           {activeTab === "By Grade" && (
+//             <select
+//               value={gradeLevel}
+//               onChange={(e) => setGradeLevel(e.target.value)}
+//               className="border px-3 py-2 rounded text-sm"
+//             >
+//               <option value="">Select Grade</option>
+//               <option value="jss1">JSS1</option>
+//               <option value="jss2">JSS2</option>
+//               <option value="jss3">JSS3</option>
+//               <option value="ss1">SS1</option>
+//               <option value="ss2">SS2</option>
+//               <option value="ss3">SS3</option>
+//             </select>
+//           )}
+//         </div>
+//       )}
+
+
+//   <div className="bg-white shadow rounded-lg overflow-x-auto">
+//   {loading ? (
+//     <p className="p-4 text-gray-500">Loading...</p>
+//   ) : filteredStudents.length === 0 ? (
+//     <p className="p-4 text-gray-500">No records found</p>
+//   ) : (
+//     <div className="min-w-full">
+//       <table className="w-full table-auto border-collapse text-sm">
+//         <thead className="bg-gray-100 sticky top-0 z-10">
+//           <tr>
+//             <th className="px-4 py-2 text-left border-b">#</th>
+//             {activeTab === "Count" ? (
+//               <th className="px-4 py-2 text-left border-b">Total Students</th>
+//             ) : (
+//               <>
+//                 <th className="px-4 py-2 text-left border-b">Name</th>
+//                 <th className="px-4 py-2 text-left border-b">School</th>
+//                 <th className="px-4 py-2 text-left border-b">Grade</th>
+//                 <th className="px-4 py-2 text-left border-b">STEM Strength</th>
+//               </>
+//             )}
+//           </tr>
+//         </thead>
+//         <tbody>
+//           {filteredStudents.map((st, index) => (
+//             <tr key={index} className="hover:bg-gray-50 border-b">
+//               <td className="px-4 py-2">{index + 1}</td>
+
+//               {activeTab === "Count" ? (
+//                 <td className="px-4 py-2 font-semibold">{st.count}</td>
+//               ) : (
+//                 <>
+//                   <td className="px-4 py-2">{st.name}</td>
+//                   <td className="px-4 py-2">{st.schoolName}</td>
+//                   <td className="px-4 py-2">{st.gradeLevel?.toUpperCase()}</td>
+//                   <td className="px-4 py-2">{st.stemStrength || "-"}</td>
+//                 </>
+//               )}
+//             </tr>
+//           ))}
+//         </tbody>
+//       </table>
+//     </div>
+//   )}
+// </div>
+
+//     </div>
+//   );
+// };
+
+// export default Dashboard;
+
+
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { FaSchool, FaRegQuestionCircle } from "react-icons/fa";
+import { RiLiveLine } from "react-icons/ri";
+import { FaUserGraduate } from "react-icons/fa6";
+import { CiSearch } from "react-icons/ci";
+
+const Dashboard = () => {
+  const [students, setStudents] = useState([]);
+  const [schools, setSchools] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [selectedSchool, setSelectedSchool] = useState(
+    localStorage.getItem("schoolId") || ""
+  );
+  const [gradeLevel, setGradeLevel] = useState("");
+  const [activeTab, setActiveTab] = useState("All");
+
+  const [stats, setStats] = useState({
+    totalSchools: 0,
+    questionsAsked: 0,
+    activeMatches: 0,
+    activeStudents: 0,
+  });
+
+  const authToken = localStorage.getItem("adminToken");
+  const baseUrl = "https://bql-production.up.railway.app";
+
+
+
+  /** Fetch schools */
+  const fetchSchools = async () => {
+    try {
+      const { data } = await axios.get(`${baseUrl}/schools`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+      
+
+      setSchools(data);
+      setStats((prev) => ({ ...prev, totalSchools: data.length }));
+    } catch (err) {
+      console.log("Error fetching schools:", err);
+    }
   };
 
-  const filteredLeaderboard =
-    activeTab === "Overall"
-      ? detailedLeaderboard
-      : detailedLeaderboard.filter((item) => item.category === activeTab);
+
+
+  /** Fetch stats */
+  const fetchStats = async () => {
+    try {
+      const { data } = await axios.get(`${baseUrl}/students/all`, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+      setStats((prev) => ({
+        ...prev,
+        activeStudents: data.length,
+        questionsAsked: data.length * 10,
+        activeMatches: Math.floor(data.length / 5),
+      }));
+    } catch (err) {
+      console.log("Error fetching stats:", err);
+    }
+  };
+
+  /** Fetch students */
+  const fetchStudents = async () => {
+    setLoading(true);
+    try {
+      let url = `${baseUrl}/students/all`;
+
+      if (activeTab === "By School" && selectedSchool) {
+        url = `${baseUrl}/students?schoolId=${selectedSchool}`;
+      }
+
+      if (activeTab === "By Grade" && selectedSchool && gradeLevel) {
+        url = `${baseUrl}/students?schoolId=${selectedSchool}&gradeLevel=${gradeLevel}`;
+      }
+
+      const { data } = await axios.get(url, {
+        headers: { Authorization: `Bearer ${authToken}` },
+      });
+
+      setStudents(data);
+    } catch (err) {
+      console.log("Error fetching students:", err);
+    }
+    setLoading(false);
+  };
+
+  /** Fetch student count */
+  const fetchStudentCount = async () => {
+    if (!selectedSchool) return;
+    setLoading(true);
+    try {
+      const { data } = await axios.get(
+        `${baseUrl}/students/school/${selectedSchool}/count`,
+        { headers: { Authorization: `Bearer ${authToken}` } }
+      );
+      setStudents([{ count: data.count }]);
+    } catch (err) {
+      console.log("Error fetching count:", err);
+    }
+    setLoading(false);
+  };
+
+  /** Effects */
+  useEffect(() => {
+    fetchSchools();
+    fetchStats();
+  }, []);
+
+  useEffect(() => {
+    if (activeTab === "Count") fetchStudentCount();
+    else fetchStudents();
+  }, [activeTab, selectedSchool, gradeLevel]);
+
+  /** Filtered students for search */
+  const filteredStudents =
+    activeTab === "Count"
+      ? students
+      : students.filter((s) => {
+          const searchText = search.toLowerCase();
+          return (
+            s.name?.toLowerCase().includes(searchText) ||
+            s.schoolName?.toLowerCase().includes(searchText) ||
+            s.gradeLevel?.toLowerCase().includes(searchText) ||
+            s.stemStrength?.toLowerCase().includes(searchText)
+          );
+        });
 
   return (
-    <div className="bg-[#F3F5FF61] p-4 sm:p-6 lg:p-8 rounded-md shadow-md">
-      <h1 className="text-xl font-semibold mb-1">Rankings</h1>
-      <p className="text-gray-500 text-sm mb-4 font-medium">Overall tournament standings</p>
+    <div className="w-full p-4 md:p-6">
+      {/* Top Stats */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div className="bg-[#1115CB] text-white p-4 rounded-xl shadow flex flex-col items-start">
+          <FaSchool size={26} className="mb-2" />
+          <p className="text-sm font-medium">Total Schools</p>
+          <p className="text-2xl font-bold">{stats.totalSchools}</p>
+        </div>
+
+        <div className="bg-black text-white p-4 rounded-xl shadow flex flex-col items-start">
+          <FaRegQuestionCircle size={26} className="mb-2" />
+          <p className="text-sm font-medium">Questions Asked</p>
+          <p className="text-2xl font-bold">{stats.questionsAsked}</p>
+        </div>
+
+        <div className="bg-[#C837AB] text-white p-4 rounded-xl shadow flex flex-col items-start">
+          <RiLiveLine size={26} className="mb-2" />
+          <p className="text-sm font-medium">Active Matches</p>
+          <p className="text-2xl font-bold">{stats.activeMatches}</p>
+        </div>
+
+        <div className="bg-[#641408] text-white p-4 rounded-xl shadow flex flex-col items-start">
+          <FaUserGraduate size={26} className="mb-2" />
+          <p className="text-sm font-medium">Active Students</p>
+          <p className="text-2xl font-bold">{stats.activeStudents}</p>
+        </div>
+      </div>
 
       {/* Tabs */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-center font-medium mb-6 w-full">
-        {leaderboardTabs.map((tab) => (
-          <motion.div
+      <div className="flex gap-2 mb-4 overflow-x-auto">
+        {["All", "By School", "By Grade", "Count"].map((tab) => (
+          <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            variants={tabVariants}
-            whileHover="hover"
-            whileTap="tap"
-            className="w-full"
+            className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap ${
+              activeTab === tab
+                ? "bg-[#001489] text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
           >
-            <span
-              className={`truncate block text-sm py-1 px-2 rounded-full transition-colors ${
-                activeTab === tab
-                  ? "bg-white text-[#001489] shadow-md"
-                  : "bg-[#F3F5FF61] border border-[#F3F5FF61] text-gray-700 hover:bg-white"
-              }`}
-            >
-              {tab}
-            </span>
-          </motion.div>
+            {tab}
+          </button>
         ))}
       </div>
 
-      {/* Leaderboard */}
-      <div className="space-y-3">
-        {filteredLeaderboard.map((item, idx) => (
-          <motion.div
-            key={item.rank}
-            custom={idx}
-            variants={leaderboardVariants}
-            initial="hidden"
-            animate="visible"
-            whileHover="hover"
-            className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-white rounded-md p-4 shadow-md cursor-pointer gap-3 w-full"
+      {/* Filters */}
+      {(activeTab === "By School" ||
+        activeTab === "By Grade" ||
+        activeTab === "Count") && (
+        <div className="flex flex-wrap gap-3 mb-4 w-full">
+          <select
+            value={selectedSchool}
+            onChange={(e) => setSelectedSchool(e.target.value)}
+            className="border border-gray-300 px-3 py-2 rounded text-sm"
           >
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full sm:w-[70%] flex-wrap">
-              <p
-                className="font-bold text-white rounded-full w-10 h-10 flex items-center justify-center"
-                style={{ backgroundColor: item.color }}
-              >
-                {item.rank}
-              </p>
-              <span className="text-gray-700 sm:truncate">{item.school}</span>
-              <img src={leaderboardIcons.Vector} alt={`${item.school} icon`} className="w-5 h-5" />
-            </div>
-            <div className="flex items-center gap-3 mt-2 sm:mt-0 flex-wrap">
-              <img src={leaderboardIcons.stream} alt="points icon" className="w-6 h-6" />
-              <div className="flex flex-col items-center min-w-[60px]">
-                <p className="font-bold text-lg">{item.points}</p>
-                <p className="text-gray-500 text-sm">Points</p>
-              </div>
-            </div>
-          </motion.div>
-        ))}
+            <option value="">Select School</option>
+            {schools.map((s) => (
+              <option key={s.id} value={s.id}>
+                {s.name}
+              </option>
+            ))}
+          </select>
+
+          {activeTab === "By Grade" && (
+            <select
+              value={gradeLevel}
+              onChange={(e) => setGradeLevel(e.target.value)}
+              className="border border-gray-300 px-3 py-2 rounded text-sm"
+            >
+              <option value="">Select Grade</option>
+              <option value="jss1">JSS1</option>
+              <option value="jss2">JSS2</option>
+              <option value="jss3">JSS3</option>
+              <option value="ss1">SS1</option>
+              <option value="ss2">SS2</option>
+              <option value="ss3">SS3</option>
+            </select>
+          )}
+        </div>
+      )}
+
+      {/* Search */}
+      <div className="relative w-full mb-4">
+        <CiSearch className="absolute left-3 top-3 text-gray-500" size={20} />
+        <input
+          type="text"
+          placeholder="Search by Name, School, Grade, STEM"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full pl-10 pr-3 py-2 border rounded text-sm"
+        />
+      </div>
+ 
+      {/* Table */}
+      <div className="bg-white shadow rounded-lg overflow-x-auto">
+        {loading ? (
+          <p className="p-4 text-gray-500">Loading...</p>
+        ) : filteredStudents.length === 0 ? (
+          <p className="p-4 text-gray-500">No records found</p>
+        ) : (
+          <table className="w-full table-auto text-sm border-collapse">
+            <thead className="bg-gray-100 sticky top-0 z-10">
+              <tr>
+                <th className="px-4 py-2 text-left border-b">#</th>
+                {activeTab === "Count" ? (
+                  <th className="px-4 py-2 text-left border-b">Total Students</th>
+                ) : (
+                  <>
+                    <th className="px-4 py-2 text-left border-b">Name</th>
+                    <th className="px-4 py-2 text-left border-b">Grade</th>
+                    <th className="px-4 py-2 text-left border-b">STEM Strength</th>
+                  </>
+                )}
+              </tr>
+            </thead>
+            <tbody>
+              {filteredStudents.map((st, idx) => (
+                <tr key={idx} className="hover:bg-gray-50 border-b">
+                  <td className="px-4 py-2">{idx + 1}</td>
+                  {activeTab === "Count" ? (
+                    <td className="px-4 py-2 font-semibold">{st.count}</td>
+                  ) : (
+                    <>
+                      <td className="px-4 py-2">{st.name}</td>
+                      <td className="px-4 py-2">{st.gradeLevel?.toUpperCase()}</td>
+                      <td className="px-4 py-2">{st.stemStrength || "-"}</td>
+                    </>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
 };
 
-export default Ranking;
+export default Dashboard;

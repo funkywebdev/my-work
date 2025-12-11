@@ -14,14 +14,14 @@ import { IoLogOutOutline } from "react-icons/io5";
 
 const Sidebar = ({ open, setOpen, selectedTab, setSelectedTab }) => {
   const menuItems = [
-    { icons: <RxDashboard size={24} />, label: "Dashboard", path: "/dashboard" },
-    { icons: <IoIosSchool size={24} />, label: "School", path: "/school" },
-    { icons: <TbBracketsAngle size={24} />, label: "Bracket", path: "/adminbracket" },
-    { icons: <FaClipboardQuestion size={24} />, label: "Questions", path: "/question" },
-    { icons: <GiKevlarVest size={24} />, label: "Live matches", path: "/live" },
-    { icons: <HiOutlineSignal size={24} />, label: "Leaderboard", path: "/board" },
-    { icons: <FaFileCode size={24} />, label: "Reports", path: "/report" },
-    { icons: <IoMdNotifications size={24} />, label: "Notification", path: "/notification" },
+    { icons: <RxDashboard size={16} />, label: "Dashboard", path: "/admindashboard" },
+    { icons: <IoIosSchool size={16} />, label: "School", path: "/schooladmin" },
+    { icons: <TbBracketsAngle size={16} />, label: "Bracket", path: "/adminbracket" },
+    { icons: <FaClipboardQuestion size={16} />, label: "Questions", path: "/question" },
+    { icons: <GiKevlarVest size={16} />, label: "Live matches", path: "/live" },
+    { icons: <HiOutlineSignal size={16} />, label: "Leaderboard", path: "/board" },
+    { icons: <FaFileCode size={16} />, label: "Reports", path: "/report" },
+    { icons: <IoMdNotifications size={16} />, label: "Notification", path: "/notification" },
   ];
 
   return (
@@ -35,7 +35,7 @@ const Sidebar = ({ open, setOpen, selectedTab, setSelectedTab }) => {
       />
 
       <nav
-        className={`fixed top-0 left-0 h-screen bg-[#001489] text-white z-50 flex flex-col transition-all duration-300
+        className={`fixed top-0 left-0 min-h-full bg-[#001489] text-white z-50 flex flex-col transition-all duration-300
           ${open ? "w-60" : "w-16"} md:w-60 md:relative
         `}
       >
@@ -101,3 +101,7 @@ const Sidebar = ({ open, setOpen, selectedTab, setSelectedTab }) => {
 };
 
 export default Sidebar;
+
+
+
+

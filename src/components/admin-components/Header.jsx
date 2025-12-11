@@ -1,30 +1,35 @@
+
+
 import React from 'react'
 import Ellipse from "../../assets/images/Ellipse.png";
 
 const Header = () => {
   return (
-    <div>
-      <div className="flex flex-row sm:flex-row justify-between items-center mb-5 
-        space-y-3 sm:space-y-0 border-b border-b-[#8F969A3B] pb-3">
+    <div className="px-3 sm:px-6">
+      <div className="flex flex-row sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-5 border-b border-b-[#8F969A3B] pb-3">
 
-        <div className="">
-          <p className="text-[16px] sm:text-2xl font-bold">Welcome</p>
-          <p className="text-[12px] sm:text-base">
+        {/* Welcome Text */}
+        <div className="flex flex-col">
+          <p className="text-sm sm:text-xl font-bold">Welcome</p>
+          <p className="text-xs sm:text-sm text-gray-700">
             Here’s an overview of your receipt
           </p>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3 lg:ml-4">
+        {/* Profile */}
+        <div className="flex items-center gap-2 sm:gap-3 mt-3 sm:mt-0">
           <img
             src={Ellipse}
             alt="profile"
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full"
+            className="w-8 h-8 sm:w-12 sm:h-12 rounded-full"
           />
-          <p className="text-[12px] sm:text-base font-medium">Mary Paul</p>
+          <p className="text-xs sm:text-sm font-medium">Mary Paul</p>
         </div>
       </div>
     </div>
   )
 }
 
-export default Header
+export default Header;
+
+

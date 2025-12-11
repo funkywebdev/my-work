@@ -25,7 +25,7 @@ const Footer = () => {
             <input
               type="email"
               placeholder="Enter your email"
-              className="w-full sm:flex-1 px-4 py-3 text-sm rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#001489] text-[#001489] font-semibold"
+              className="w-full sm:flex-1 px-4 py-3 text-sm rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#001489] text-black font-semibold"
             />
             <button className="bg-[#001489] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#0025c5] transition w-full sm:w-auto">
               Subscribe

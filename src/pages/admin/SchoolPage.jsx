@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import Sidebar from "../../components/admin-components/Sidebar";
 import Header from "../../components/admin-components/Header";
-import School from "../../components/admin-components/School"
-
+import School from "../../components/admin-components/School";
 
 const SchoolPage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [selectedTab, setSelectedTab] = useState("Dashboard");
 
   return (
-    <div className="flex min-h-screen overflow-x-hidden ">
-      
+    <div className="flex min-h-screen">
       {/* Sidebar */}
-      <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} selectedTab={selectedTab}
-        setSelectedTab={setSelectedTab} />
+      <Sidebar
+        open={sidebarOpen}
+        setOpen={setSidebarOpen}
+        selectedTab={selectedTab}
+        setSelectedTab={setSelectedTab}
+      />
 
       {/* Main Content */}
       <div
@@ -22,10 +24,12 @@ const SchoolPage = () => {
         `}
       >
         {/* Header */}
-         <Header />
+        <Header />
 
         {/* Dynamic content */}
-        <School />
+        <div className="overflow-x-auto w-full">
+          <School />
+        </div>
       </div>
     </div>
   );

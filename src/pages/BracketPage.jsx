@@ -1,12 +1,12 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
+import Nav2 from '../components/Nav2'
 import Bracket from '../components/Bracket'
 import Footer from '../components/Footer'
 
 const BracketPage = () => {
   return (
     <div>
-      <Navbar />
+      <Nav2 />
       <Bracket />
      <Footer />
     </div>

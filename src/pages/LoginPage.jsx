@@ -1,6 +1,5 @@
 import React from 'react';
 import Bql from '../components/Bql';
-import Footer from '../components/Footer';
 import Login from '../components/Login';
 
 const LoginPage = () => {
@@ -8,7 +7,6 @@ const LoginPage = () => {
     <div>
      <Bql />
       <Login />
-      <Footer /> 
     </div>
   )
 }

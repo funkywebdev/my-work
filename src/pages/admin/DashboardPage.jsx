@@ -17,15 +17,17 @@ const DashboardPage = () => {
 
       {/* Main Content */}
       <div
-        className={`flex-1 flex flex-col transition-all duration-300 p-4
-          ${sidebarOpen ? "ml-60" : "ml-16"} md:ml-2
+        className={`flex-1 flex flex-col transition-all duration-300
+          ${sidebarOpen ? "ml-60" : "ml-16"} md:ml-2 h-screen overflow-y-auto p-4
         `}
       >
         {/* Header */}
          <Header />
 
         {/* Dynamic content */}
+         <div className="w-full overflow-x-auto">
         <Dashboard />
+        </div>
       </div>
     </div>
   );

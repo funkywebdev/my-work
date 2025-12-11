@@ -116,14 +116,14 @@ const SchoolInformation = () => {
     <>
       {/* NAVBAR */}
       <nav className="bg-[#001489] p-4 flex items-center gap-4 shadow-md">
-        <img src={removebg} alt="Logo" className="w-24 h-auto object-contain" />
+         <img src={removebg} alt="Logo" className="w-20 sm:w-34 md:ml-10 h-auto object-contain" />
         <p className="text-white font-bold sm:text-2xl text-center sm:mx-auto">
           School Registration
         </p>
       </nav>
 
       {/* MAIN FORM */}
-      <div className="flex justify-center px-4 sm:px-6 mt-4 sm:mt-8">
+      <div className="flex justify-center px-4 sm:px-6 mt-4">
         <div className="w-full bg-white shadow-lg rounded-xl p-6 sm:p-10 sm:max-w-[1200px]">
           <h2 className="text-2xl font-bold mb-2">School Information</h2>
           <p className="text-gray-500 mb-6">Tell us about your school</p>

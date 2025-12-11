@@ -1,12 +1,12 @@
 import React from 'react'
-import Navbar from '../components/Navbar'
+import Nav2 from '../components/Nav2'
 import Footer from '../components/Footer'
 import Leader from '../components/Leader'
 
 const LeaderboardPage = () => {
   return (
     <div>
-      <Navbar />
+      <Nav2 />
       <Leader />
       <Footer />
     </div>

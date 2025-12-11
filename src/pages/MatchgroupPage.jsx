@@ -1,12 +1,12 @@
 import React from 'react'
 import MatchGroup from "../components/MatchGroup"
-import Navbar from '../components/Navbar'
+import Nav2 from '../components/Nav2'
 import Footer from '../components/Footer'
 
 const MatchgroupPage = () => {
   return (
     <div>
-      <Navbar />
+      <Nav2 />
       <MatchGroup />
       <Footer />
     </div>

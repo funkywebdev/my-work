@@ -1,16 +1,13 @@
-import Navbar from "../../components/Navbar";
-import AdminLogin from "../../components/admin-components/AdmminLogin"
-import Footer from "../../components/Footer";
-
+import Bql from "../components/Bql";
+import Login from "../components/Login"; // adjust path if different
 
 const LoginPage = () => {
   return (
     <div>
-      <Navbar />
-      <AdminLogin />
-      <Footer />
+      <Bql />
+      <Login />
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;
