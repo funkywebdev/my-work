@@ -1,13 +1,13 @@
 import React from "react";
 import { motion } from "framer-motion";
-import logoA from "../assets/images/logoA.png";
-import logoB from "../assets/images/logoB.png";
-import logoC from "../assets/images/logoC.png";
-import logoD from "../assets/images/logoD.png";
-import logoF from "../assets/images/logoF.png";
+import LogoA from "../assets/images/LogoA.png";
+import LogoB from "../assets/images/LogoB.png";
+import LogoC from "../assets/images/LogoC.png";
+import LogoD from "../assets/images/LogoD.png";
+import LogoF from "../assets/images/LogoF.png";
 import VectorA from "../assets/images/VectorA.png";
 
-const logos = [logoA, logoB, logoC, VectorA, logoD, logoF];
+const logos = [LogoA, LogoB, LogoC, VectorA, LogoD, LogoF];
 
 const Sponsor = () => {
   return (
