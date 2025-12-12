@@ -114,13 +114,22 @@ const SchoolInformation = () => {
 
   return (
     <>
-      {/* NAVBAR */}
-      <nav className="bg-[#001489] p-4 flex items-center gap-4 shadow-md">
-         <img src={removebg} alt="Logo" className="w-20 sm:w-34 md:ml-10 h-auto object-contain" />
-        <p className="text-white font-bold sm:text-2xl text-center sm:mx-auto">
-          School Registration
-        </p>
-      </nav>
+  <nav className="bg-[#001489] p-4 flex items-center justify-between shadow-md">
+  <img
+    src={removebg}
+    alt="Logo"
+    className="w-20 sm:w-34 md:ml-10 h-auto object-contain"
+  />
+
+  {/* CENTER: Title */}
+  <div className="flex-1 flex justify-center">
+    <p className="text-white font-bold sm:text-2xl">
+      School Registration
+    </p>
+  </div>
+  <div className="w-20"></div>
+</nav>
+
 
       {/* MAIN FORM */}
       <div className="flex justify-center px-4 sm:px-6 mt-4">

@@ -3,7 +3,7 @@ import removebg from "../assets/images/removebg.png";
 
 const Bql = () => {
   return (
-    <nav className="bg-[#001489] p-2 flex items-center px-6  sm:px-12">
+    <nav className="bg-[#001489] p-2 flex items-center px-6 sm:px-12 rounded-t-lg">
       <img 
         src={removebg} 
         alt="Bolo Quiz League Logo" 

@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect } from "react";
-import { FaUsers, FaCalendarCheck, FaEdit } from "react-icons/fa";
+import { FaUsers, FaCalendarCheck } from "react-icons/fa";
 import { PiMedalBold } from "react-icons/pi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
+import { MdOutlineModeEdit } from "react-icons/md";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
@@ -269,7 +270,7 @@ const UserDashboard = () => {
                         onClick={() => { setEditingIndex(index); reset(student); setShowModal(true); }}
                         disabled={fetchingStudents}
                       >
-                        <FaEdit />
+                        <MdOutlineModeEdit />
                       </button>
                     </td>
                     <td className="py-2 px-2 sm:px-3 text-center">
@@ -291,7 +292,7 @@ const UserDashboard = () => {
 
       {/* Add/Edit Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50 p-4">
+        <div className="fixed inset-0 bg-opacity-40 flex justify-center items-center z-50 p-4">
           <div className="bg-white p-4 sm:p-6 rounded-lg w-full max-w-md shadow-md">
             <h3 className="text-lg sm:text-xl font-semibold mb-4">
               {editingIndex !== null ? "Edit Student" : "Add Student"}
