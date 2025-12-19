@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@tailwindcss/vite": "^4.1.17",
     "axios": "^1.13.2",
     "daisyui": "^5.5.8",
@@ -27,7 +28,8 @@
     "react-toastify": "^11.0.5",
     "react-type-animation": "^3.2.0",
     "socket.io-client": "^4.8.1",
-    "ws": "^8.18.3"
+    "ws": "^8.18.3",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

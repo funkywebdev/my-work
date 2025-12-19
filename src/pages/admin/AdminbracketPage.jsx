@@ -1,10 +1,11 @@
+
 import React, { useState } from "react";
 import Sidebar from "../../components/admin-components/Sidebar";
 import Header from "../../components/admin-components/Header";
 import AdminBracket from "../../components/admin-components/AdminBracket"
 
 
-const AdminbracketPage = () => {
+const  AdminbracketPage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [selectedTab, setSelectedTab] = useState("Dashboard");
 
@@ -17,15 +18,17 @@ const AdminbracketPage = () => {
 
       {/* Main Content */}
       <div
-        className={`flex-1 flex flex-col transition-all duration-300 p-4
-          ${sidebarOpen ? "ml-60" : "ml-16"} md:ml-2
+        className={`flex-1 flex flex-col transition-all duration-300
+          ${sidebarOpen ? "ml-60" : "ml-16"} md:ml-2 h-screen overflow-y-auto p-4
         `}
       >
         {/* Header */}
          <Header />
 
         {/* Dynamic content */}
+         <div className="w-full overflow-x-auto">
         <AdminBracket />
+        </div>
       </div>
     </div>
   );

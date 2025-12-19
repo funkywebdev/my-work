@@ -20,7 +20,7 @@ const Sidebar = ({ open, setOpen, selectedTab, setSelectedTab }) => {
     { icons: <FaClipboardQuestion size={16} />, label: "Questions", path: "/question" },
     { icons: <GiKevlarVest size={16} />, label: "Live matches", path: "/live" },
     { icons: <HiOutlineSignal size={16} />, label: "Leaderboard", path: "/board" },
-    { icons: <FaFileCode size={16} />, label: "Reports", path: "/report" },
+    { icons: <FaFileCode size={16} />, label: "Sessions", path: "/report" },
     { icons: <IoMdNotifications size={16} />, label: "Notification", path: "/notification" },
   ];
 

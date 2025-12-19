@@ -1,121 +1,78 @@
-import React, { useState, useEffect } from "react";
+
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 import schoollogo from "../assets/images/schoollogo.png";
 import { handleAxiosError } from "../utils/errorHandler";
 
 const baseUrl = "https://bql-production.up.railway.app";
 const token = localStorage.getItem("schoolToken");
 
-// Countdown Component
-const Countdown = ({ match }) => {
-  const [timeLeft, setTimeLeft] = useState("");
-
-  useEffect(() => {
-    if (match.status !== "Upcoming" || match.time === "TBA") return;
-
-    const interval = setInterval(() => {
-      const now = new Date();
-      const matchTime = new Date(match.time);
-      const diff = matchTime - now;
-
-      if (diff <= 0) {
-        setTimeLeft("Live");
-        clearInterval(interval);
-      } else {
-        const hours = Math.floor(diff / 1000 / 60 / 60);
-        const minutes = Math.floor((diff / 1000 / 60) % 60);
-        const seconds = Math.floor((diff / 1000) % 60);
-        setTimeLeft(`${hours}h ${minutes}m ${seconds}s`);
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [match.time, match.status]);
-
-  return <>{timeLeft}</>;
-};
-
-// Animation Variants
-const cardVariants = {
-  hidden: { opacity: 0, y: 50, scale: 0.8 },
-  show: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { type: "spring", stiffness: 90, damping: 12 },
-  },
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 },
 };
 
 const Bracket = () => {
+  const navigate = useNavigate();
+
   const [tournaments, setTournaments] = useState([]);
   const [selectedTournament, setSelectedTournament] = useState(null);
   const [schedule, setSchedule] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [checkInLoading, setCheckInLoading] = useState(null);
 
-  // Fetch tournaments
   const fetchTournaments = async () => {
     setLoading(true);
     try {
       const res = await axios.get(`${baseUrl}/tournaments`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      console.log(res);
-
-      if (res.data && res.data.length > 0) {
-        setTournaments(res.data);
-      } else {
-        setTournaments([{ id: 1, name: "Mock Tournament", year: 2025 }]);
-      }
+      console.log("Tournaments response:", res.data);
+      setTournaments(res.data || []);
     } catch (err) {
-      console.error(err);
-
-      toast.error(
-        err.response?.status === 401
-          ? "Session expired. Please log in again."
-          : "Failed to fetch tournaments"
-      );
-
-      setTournaments([{ id: 1, name: "Mock Tournament", year: 2025 }]);
+      toast.error("Unable to load tournaments");
     } finally {
       setLoading(false);
     }
   };
 
-  // Fetch schedule
-  const fetchSchedule = async (tournamentId) => {
+  const fetchSchedule = async (id) => {
     setLoading(true);
     try {
-      const res = await axios.get(
-        `${baseUrl}/tournaments/${tournamentId}/school-schedule`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-
-      setSchedule(res.data.matches || []);
+      const res = await axios.get(`${baseUrl}/tournaments/${id}/school-schedule`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log("Schedule response:", res.data);
+      setSchedule(res.data || []);
     } catch (err) {
-      console.error(err);
-
-      // toast.error(
-      //   err.response?.status === 401
-      //     ? "Session expired. Please log in again."
-      //     : "Failed to fetch schedule"
-      // );
-
       handleAxiosError(err);
-      
-
-      setSchedule([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSelectTournament = (t) => {
-    setSelectedTournament(t);
-    fetchSchedule(t.id);
+  const handleCheckIn = async (matchId) => {
+    setCheckInLoading(matchId);
+    try {
+      const res = await axios.post(
+        `${baseUrl}/tournaments/matches/${matchId}/check-in`,
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log("Check-in response:", res.data);
+      if (res.status === 200 || res.status === 201) {
+        toast.success("Checked in successfully!");
+        navigate("/match");
+      }
+    } catch (err) {
+      handleAxiosError(err);
+    } finally {
+      setCheckInLoading(null);
+    }
   };
 
   useEffect(() => {
@@ -123,108 +80,108 @@ const Bracket = () => {
   }, []);
 
   return (
-    <div className="py-10 px-6 sm:px-12 lg:px-18">
+    <div className=" bg-white px-6 py-10">
+      <ToastContainer />
+      <motion.h1
+        variants={fadeUp}
+        initial="hidden"
+        animate="show"
+        className="text-[18px] sm:text-2xl font-bold text-center mb-1"
+      >
+        Tournament Bracket
+      </motion.h1>
 
-      {/* Toast Container */}
-      <ToastContainer position="top-right" autoClose={3000} />
+      <p className="text-center mb-6 text-[16px]">Follow the incredible journey of young innovators on their path to the championship</p>
 
-      <h1 className="text-3xl font-bold text-center mb-8">
-        School Tournament Bracket
-      </h1>
+      {/* Tournament Select */}
+      <div className="max-w-xl mx-auto mb-8">
+        <select
+          className="w-full border border-[#001489] rounded-lg p-3 text-black focus:outline-none"
+          onChange={(e) => {
+            if (!e.target.value) return;
+            const t = JSON.parse(e.target.value);
+            setSelectedTournament(t);
+            fetchSchedule(t.id);
+          }}
+        >
+          <option value="">Select Tournament</option>
+          {tournaments.map((t) => (
+            <option key={t.id} value={JSON.stringify(t)}>
+              {t.name} ({t.year})
+            </option>
+          ))}
+        </select>
+      </div>
 
-      {loading && <p className="text-center text-blue-500">Loading...</p>}
+      {loading && <p className="text-center text-[#001489]">Loading...</p>}
 
-      {!loading && tournaments.length > 0 && (
-        <div className="mb-8 text-center">
-          <select
-            className="border border-gray-300 p-2 rounded"
-            onChange={(e) => {
-              if (!e.target.value) return;
-              handleSelectTournament(JSON.parse(e.target.value));
-            }}
-          >
-            <option value="">Select Tournament</option>
-            {tournaments.map((t) => (
-              <option key={t.id} value={JSON.stringify(t)}>
-                {t.name} ({t.year})
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
+      {/* Schedule Cards */}
+      <div className="max-w-3xl mx-auto space-y-5">
+        {!loading && selectedTournament && schedule.length === 0 && (
+          <p className="text-center text-[#001489]">No matches scheduled yet.</p>
+        )}
 
-      {!loading && tournaments.length === 0 && (
-        <p className="text-center text-gray-500">No tournaments available.</p>
-      )}
-
-      {selectedTournament && schedule.length === 0 && !loading && (
-        <p className="text-center text-gray-500">
-          No matches scheduled yet for this tournament.
-        </p>
-      )}
-
-      {schedule.length > 0 &&
-        schedule.map((match) => (
+        {schedule.map((match) => (
           <motion.div
             key={match.id}
-            variants={cardVariants}
+            variants={fadeUp}
             initial="hidden"
             animate="show"
-            className="border border-[#001489] rounded-xl p-5 shadow-md bg-white mb-4"
+            className="bg-white rounded-xl shadow p-5 border border-[#001489]"
           >
-            <div className="flex justify-between items-center mb-2 text-sm">
-              <p>
-                {match.time !== "TBA"
-                  ? new Date(match.time).toLocaleString()
-                  : "TBA"}
+            {/* Match Header */}
+            <div className="flex justify-between items-center mb-3">
+              <p className="text-sm text-black">
+                {match.time !== "TBA" ? new Date(match.time).toLocaleString() : "TBA"}
               </p>
-
-              <p
+              <span
                 className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                  match.status === "Live"
-                    ? "border border-[#001489] text-[#001489] animate-pulse"
-                    : match.status === "Upcoming"
-                    ? "border border-[#001489] text-[#001489]"
-                    : "bg-[#001489] text-white"
+                  match.status === "live"
+                    ? "bg-[#001489] text-white animate-pulse"
+                    : match.status === "pending"
+                    ? "bg-gray-200 text-gray-700"
+                    : "bg-gray-200 text-black"
                 }`}
               >
                 {match.status}
-              </p>
-            </div>
-
-            {/* Team A */}
-            <div className="flex justify-between items-center mb-2 bg-[#FAFBFF] rounded-md p-2">
-              <span className="flex items-center space-x-2">
-                <img
-                  src={schoollogo}
-                  alt="School Logo"
-                  className="w-8 h-8 rounded"
-                />
-                <span className="font-semibold">
-                  {match.teamA?.name || "TBD"}
-                </span>
               </span>
-              <p className="font-semibold">{match.scoreA || "-"}</p>
             </div>
 
-            <p className="text-center font-semibold my-2 text-gray-700">Vs</p>
-
-            {/* Team B */}
-            <div className="flex justify-between items-center bg-[#FAFBFF] rounded-md p-2">
-              <span className="flex items-center space-x-2">
-                <img
-                  src={schoollogo}
-                  alt="School Logo"
-                  className="w-8 h-8 rounded"
-                />
-                <span className="font-semibold">
-                  {match.teamB?.name || "TBD"}
+            {/* Teams */}
+            {[match.school1, match.school2].map((school, idx) => (
+              <div
+                key={idx}
+                className="flex justify-between items-center bg-[#F5F7FB] rounded-md p-3 mb-2"
+              >
+                <div className="flex items-center gap-3">
+                  <img
+                    src={school?.logoUrl || schoollogo}
+                    className="w-10 h-10 rounded"
+                    alt="logo"
+                  />
+                  <span className="font-semibold text-black">
+                    {school?.name || "TBD"}
+                  </span>
+                </div>
+                <span className="font-bold text-black">
+                  {idx === 0 ? match.school1Score : match.school2Score || 0}
                 </span>
-              </span>
-              <p className="font-semibold">{match.scoreB || "-"}</p>
-            </div>
+              </div>
+            ))}
+
+            {/* Check-in Button */}
+            {match.status === "pending" && (
+              <button
+                onClick={() => handleCheckIn(match.id)}
+                disabled={checkInLoading === match.id}
+                className="w-full mt-3 bg-[#001489] text-white py-2 rounded-lg hover:bg-[#001489] disabled:opacity-50"
+              >
+                {checkInLoading === match.id ? "Checking in..." : "Check In"}
+              </button>
+            )}
           </motion.div>
         ))}
+      </div>
     </div>
   );
 };

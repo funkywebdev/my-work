@@ -74,7 +74,7 @@ import RegistrationPage from "./pages/RegistrationPage";
 import UserDashPage from "./pages/UserDashPage";
 import LivequizPage from "./pages/LivequizPage";
 import LeaderboardPage from "./pages/LeaderboardPage";
-import MatchgroupPage from "./pages/MatchgroupPage";
+import QuizPage from "./pages/QuizPage";
 import BracketPage from "./pages/BracketPage";
 
 import AdminloginPage from "./pages/admin/AdminloginPage";
@@ -116,7 +116,7 @@ const App = () => {
           <Route path="/dashboard" element={<UserDashPage />} />
           <Route path="/leader" element={<LeaderboardPage />} />
           <Route path="/quiz" element={<LivequizPage />} />
-          <Route path="/match" element={<MatchgroupPage />} />
+          <Route path="/match" element={<QuizPage />} />
           <Route path="/bracket" element={<BracketPage />} />
         </Route>
 

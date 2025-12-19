@@ -1,16 +1,16 @@
 import React from 'react'
-import MatchGroup from "../components/MatchGroup"
+import QuizSession from "../components/QuizSession"
 import Nav2 from '../components/Nav2'
 import Footer from '../components/Footer'
 
-const MatchgroupPage = () => {
+const QuizPage = () => {
   return (
     <div>
       <Nav2 />
-      <MatchGroup />
+      <QuizSession />
       <Footer />
     </div>
   )
 }
 
-export default MatchgroupPage
+export default QuizPage;
