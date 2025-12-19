@@ -147,6 +147,8 @@ const Bracket = () => {
               </span>
             </div>
 
+            
+
             {/* Teams */}
             {[match.school1, match.school2].map((school, idx) => (
               <div
@@ -162,6 +164,8 @@ const Bracket = () => {
                   <span className="font-semibold text-black">
                     {school?.name || "TBD"}
                   </span>
+
+                  
                 </div>
                 <span className="font-bold text-black">
                   {idx === 0 ? match.school1Score : match.school2Score || 0}
