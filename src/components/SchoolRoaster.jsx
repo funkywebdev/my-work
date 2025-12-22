@@ -536,7 +536,7 @@ const SchoolRoaster = () => {
       <ToastContainer />
 
       {/* NAVBAR */}
-      <nav className="bg-[#001489] p-4 flex items-center gap-4 shadow-md">
+      <nav className="bg-[#001489] p-4 flex items-center gap-4 shadow-md rounded-t-[15px]">
         <img
           src={removebg}
           alt="Logo"

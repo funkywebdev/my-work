@@ -68,13 +68,13 @@ const SchoolLeader = () => {
     iso ? new Date(iso).toLocaleDateString() : "-";
 
   return (
-    <div className="min-h-screen px-4 sm:px-24 py-6 bg-gray-50">
+    <div className="min-h-screen px-7 sm:px-24 py-6 bg-gray-50">
       
       {/* HEADER */}
 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:mb-16 mb-6 ">
   {/* Title */}
-  <div className="flex flex-col sm:flex-col sm:items-start gap-2">
-    <h1 className=" text-2xl sm:text-4xl font-bold">Leaderboard</h1>
+  <div className="flex flex-col sm:flex-col sm:items-start gap-2 sm:py-4">
+    <h1 className=" text-2xl sm:text-3xl font-bold">Leaderboard</h1>
     <p className="text-black/60 text-[15px] sm:text-[17px]">Real-time rankings and performance across all STEM categories</p>
   </div>
 

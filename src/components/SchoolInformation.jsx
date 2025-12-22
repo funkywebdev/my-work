@@ -114,7 +114,7 @@ const SchoolInformation = () => {
 
   return (
     <>
-  <nav className="bg-[#001489] p-4 flex items-center justify-between shadow-md">
+  <nav className="bg-[#001489] p-4 flex items-center justify-between shadow-md rounded-t-[15px]">
   <img
     src={removebg}
     alt="Logo"
