@@ -15,7 +15,7 @@ export const getAllSchools = () => api.get("/schools/all");
 
 // Register a school (with FormData)
 export const registerSchool = (formData) =>
-  api.post("/schools/register", formData); // Let Axios handle multipart/form-data
+  api.post("/schools/register", formData);
 
 // Update a school (requires auth token)
 export const updateSchool = (schoolId, token, data) =>

@@ -7,7 +7,7 @@ import medal from "../../assets/images/medal.png";
 import medal2 from "../../assets/images/medal2.png";
 
 const BASE_URL = "https://bql-production.up.railway.app";
-const TOKEN = localStorage.getItem("adminToken"); // platform admin token
+const TOKEN = localStorage.getItem("adminToken");
 
 const PlatformAdminLeaderboard = () => {
   const [schools, setSchools] = useState([]);
@@ -28,12 +28,9 @@ const PlatformAdminLeaderboard = () => {
     } catch (err) {
       console.error("Axios Error:", err);
 
-      // Show toast with proper error message
+      
       if (err.response) {
-        // Server responded with a status code outside 2xx
-        console.log("Response Data:", err.response.data);
-        console.log("Status:", err.response.status);
-        console.log("Headers:", err.response.headers);
+        
         toast.error(err.response.data?.message || `Error ${err.response.status}`);
       } else if (err.request) {
         // Request was made but no response

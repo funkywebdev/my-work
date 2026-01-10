@@ -158,10 +158,10 @@ const SchoolAssessmentPanel = () => {
     <div className="bg-gray-50 min-h-screen p-6 text-black flex flex-col items-center">
       <ToastContainer position="top-right" autoClose={4000} />
 
-      <h1 className="text-3xl font-bold text-[#001489] mb-2 text-center">
+      <h1 className="text-2xl font-bold text-[#001489] mb-2 text-center">
         Quiz Sessions
       </h1>
-      <p className="text-center text-gray-600 mb-8 text-14px sm:text-[18px] h-12">
+      <p className="text-center text-gray-600 mb-8 text-12px sm:text-[18px] h-12">
         {rotatingTexts[currentTextIndex]}
       </p>
 
@@ -246,7 +246,11 @@ const SchoolAssessmentPanel = () => {
 /* ================= REUSABLE COMPONENTS ================= */
 const Section = ({ title, children }) => (
   <section className="w-full max-w-5xl mb-10">
-    <h2 className="text-xl font-semibold text-[#001489] mb-4">{title}</h2>
+    {/* <h2 className="text-[16px] sm:text-xl font-semibold text-[#001489] mb-4 text-center">{title}</h2> */}
+    <h2 className="text-[16px] sm:text-xl font-semibold text-[#001489] mb-4  md:text-left">
+  {title}
+</h2>
+
     <div className="grid gap-6 sm:grid-cols-2">{children}</div>
   </section>
 );
@@ -261,7 +265,7 @@ const SessionCard = ({ session, actionLabel, onAction, onView, loadingJoin, load
   return (
     <div className="border border-gray-200 p-5 rounded-xl shadow-md flex flex-col justify-between hover:shadow-xl transition-shadow duration-300 group">
       <div>
-        <h3 className="font-bold text-lg text-[#001489] mb-2">{session.name}</h3>
+        <h3 className="font-bold text-[16px] sm:text-lg text-[#001489] mb-2">{session.name}</h3>
         <p className="text-sm text-gray-500 mb-1">
           Categories: <span className="font-medium">{session.categories?.join(", ")}</span>
         </p>
