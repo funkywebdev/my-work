@@ -28,15 +28,16 @@ const Sidebar = ({ open, setOpen, selectedTab, setSelectedTab }) => {
     <>
       {/* Mobile Overlay */}
       <div
-        className={`fixed inset-0 bg-opacity-50 z-40 md:hidden transition-opacity ${
+        className={`fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setOpen(false)}
       />
 
+      {/* Sidebar */}
       <nav
         className={`fixed top-0 left-0 min-h-full bg-[#001489] text-white z-50 flex flex-col transition-all duration-300
-          ${open ? "w-60" : "w-16"} md:w-60 md:relative
+          ${open ? "w-48 md:w-60" : "w-16 md:w-60"} md:relative
         `}
       >
         {/* Header */}
@@ -44,9 +45,9 @@ const Sidebar = ({ open, setOpen, selectedTab, setSelectedTab }) => {
           <img
             src={imglogo}
             alt="logo"
-            className={`transition-all duration-300 rounded ${
-              open ? "w-24 opacity-100" : "w-0 opacity-0 md:w-24 md:opacity-100"
-            }`}
+            className={`transition-all duration-300 rounded
+              ${open ? "w-20 md:w-24 opacity-100" : "w-0 md:w-24 md:opacity-100 opacity-0"}
+            `}
           />
           <MdMenuOpen
             size={28}
@@ -55,11 +56,10 @@ const Sidebar = ({ open, setOpen, selectedTab, setSelectedTab }) => {
           />
         </div>
 
-        {/* Menu */}
-        <ul className="p-4 flex-1">
+        {/* Menu Items */}
+        <ul className="p-2 sm:p-4 flex-1 flex flex-col">
           {menuItems.map((item, index) => {
             const isActive = selectedTab === item.label;
-
             return (
               <Link
                 to={item.path}
@@ -67,18 +67,15 @@ const Sidebar = ({ open, setOpen, selectedTab, setSelectedTab }) => {
                 onClick={() => setSelectedTab(item.label)}
               >
                 <li
-                  className={`flex items-center gap-3 p-3 my-2 rounded-md cursor-pointer transition-all
-                    ${
-                      isActive
-                        ? "bg-white text-[#001489]"
-                        : "text-white hover:bg-white/20"
-                    }
+                  className={`flex items-center gap-3 p-2 sm:p-3 my-2 rounded-md cursor-pointer transition-all
+                    ${isActive ? "bg-white text-[#001489]" : "text-white hover:bg-white/20"}
                   `}
                 >
                   <span>{item.icons}</span>
-
                   <span
-                    className={`${open ? "inline-block" : "hidden md:inline-block"}`}
+                    className={`transition-all duration-300 text-sm sm:text-base ${
+                      open ? "inline-block" : "hidden md:inline-block"
+                    }`}
                   >
                     {item.label}
                   </span>
@@ -89,7 +86,13 @@ const Sidebar = ({ open, setOpen, selectedTab, setSelectedTab }) => {
         </ul>
 
         {/* Footer - Logout */}
-        <div className="flex items-center gap-3 p-3 bg-[#FF0041] rounded cursor-pointer">
+        <div
+          className="mt-auto flex items-center gap-3 p-3 bg-[#FF0041] rounded cursor-pointer"
+          onClick={() => {
+            // Add your logout function here
+            console.log("Logout clicked");
+          }}
+        >
           <IoLogOutOutline size={24} className="text-white" />
           <span className={`${open ? "inline-block" : "hidden md:inline-block"} text-white`}>
             Logout
@@ -101,7 +104,4 @@ const Sidebar = ({ open, setOpen, selectedTab, setSelectedTab }) => {
 };
 
 export default Sidebar;
-
-
-
 
