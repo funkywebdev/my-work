@@ -1,7 +1,3 @@
-
-
-
-
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -85,7 +81,7 @@ const LiveQuiz = () => {
   const [score, setScore] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [lobbyCountdown, setLobbyCountdown] = useState(5);
+  const [lobbyCountdown, setLobbyCountdown] = useState(15);
   const [showModal, setShowModal] = useState(false);
   const [timeLeft, setTimeLeft] = useState(totalTime);
   const [missedQuestions, setMissedQuestions] = useState([]); // { question, correctAnswerText, selectedAnswerText }
@@ -181,18 +177,18 @@ const LiveQuiz = () => {
   <div className="min-h-screen flex items-center justify-center bg-white px-4">
   <div className="text-center max-w-md w-full">
     <h1 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-3">
-      Waiting for players
+       Get ready! The quiz is about to start 🚀
     </h1>
 
     <p className="text-sm sm:text-base text-gray-600 mb-6">
-      The quiz will begin shortly.
+       Sit tight — we’ll begin shortly.
     </p>
 
     <div className="text-4xl sm:text-5xl font-bold text-gray-900 mb-2">
       {lobbyCountdown}
     </div>
 
-    <p className="text-xs sm:text-sm text-gray-500">
+    <p className="text-sm sm:text-base text-gray-500">
       seconds remaining
     </p>
   </div>
