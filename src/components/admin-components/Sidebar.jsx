@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // <-- add useNavigate
 import imglogo from "../../assets/images/imglogo.png";
 import { MdMenuOpen } from "react-icons/md";
 import { RxDashboard } from "react-icons/rx";
@@ -13,6 +13,8 @@ import { IoMdNotifications } from "react-icons/io";
 import { IoLogOutOutline } from "react-icons/io5";
 
 const Sidebar = ({ open, setOpen, selectedTab, setSelectedTab }) => {
+  const navigate = useNavigate(); // <-- initialize navigate
+
   const menuItems = [
     { icons: <RxDashboard size={16} />, label: "Dashboard", path: "/admindashboard" },
     { icons: <IoIosSchool size={16} />, label: "School", path: "/schooladmin" },
@@ -23,6 +25,13 @@ const Sidebar = ({ open, setOpen, selectedTab, setSelectedTab }) => {
     { icons: <FaFileCode size={16} />, label: "Sessions", path: "/report" },
     { icons: <IoMdNotifications size={16} />, label: "Notification", path: "/notification" },
   ];
+
+  const handleLogout = () => {
+    // 1. Clear token or user data
+    localStorage.removeItem("adminToken"); // adjust key based on your app
+    // 2. Redirect to login page
+    navigate("/login");
+  };
 
   return (
     <>
@@ -88,10 +97,7 @@ const Sidebar = ({ open, setOpen, selectedTab, setSelectedTab }) => {
         {/* Footer - Logout */}
         <div
           className="mt-auto flex items-center gap-3 p-3 bg-[#FF0041] rounded cursor-pointer"
-          onClick={() => {
-            // Add your logout function here
-            console.log("Logout clicked");
-          }}
+          onClick={handleLogout} // <-- use the function here
         >
           <IoLogOutOutline size={24} className="text-white" />
           <span className={`${open ? "inline-block" : "hidden md:inline-block"} text-white`}>
@@ -104,4 +110,3 @@ const Sidebar = ({ open, setOpen, selectedTab, setSelectedTab }) => {
 };
 
 export default Sidebar;
-

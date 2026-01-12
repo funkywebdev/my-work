@@ -188,7 +188,7 @@ const LiveQuiz = () => {
       {lobbyCountdown}
     </div>
 
-    <p className="text-sm sm:text-base text-gray-500">
+    <p className="text-base text-gray-500">
       seconds remaining
     </p>
   </div>

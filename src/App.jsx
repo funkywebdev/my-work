@@ -90,6 +90,7 @@ import NotificationPage from "./pages/admin/NotificationPage";
 import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./components/admin-components/ProtectedRoute";  // For USER
 import AdminProtectedRoute from "./components/admin-components/AdminProtectedRoute";  // For ADMIN
+import SchoolQuizPage from "./pages/SchoolQuizPage";
 
 
 const App = () => {
@@ -116,6 +117,7 @@ const App = () => {
           <Route path="/dashboard" element={<UserDashPage />} />
           <Route path="/leader" element={<LeaderboardPage />} />
           <Route path="/quiz" element={<LivequizPage />} />
+          <Route path="/quiz/:id" element={<SchoolQuizPage />} />
           <Route path="/match" element={<QuizPage />} />
           <Route path="/bracket" element={<BracketPage />} />
         </Route>

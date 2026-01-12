@@ -1,11 +1,14 @@
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+ 
 
 const BASE_URL = "https://bql-production.up.railway.app";
 const TOKEN = localStorage.getItem("schoolToken");
+
+//console.log("School Token:", TOKEN);
 
 // Words to rotate under the heading
 const rotatingTexts = [
@@ -16,6 +19,7 @@ const rotatingTexts = [
 ];
 
 const SchoolAssessmentPanel = () => {
+  
   const [availableSessions, setAvailableSessions] = useState([]);
   const [mySessions, setMySessions] = useState([]);
   const [selectedSession, setSelectedSession] = useState(null);
@@ -61,6 +65,7 @@ const SchoolAssessmentPanel = () => {
       const res = await axios.get(`${BASE_URL}/quiz/sessions/available`, {
         headers: { Authorization: `Bearer ${TOKEN}` },
       });
+      //console.log(res.data);
       return res.data;
     } catch (err) {
       handleAxiosError(err, "FETCH AVAILABLE ERROR:");
@@ -107,9 +112,13 @@ const SchoolAssessmentPanel = () => {
   const joinSession = async (id) => {
     setLoadingJoinId(id);
     try {
-      await axios.post(`${BASE_URL}/quiz/sessions/${id}/join`, {}, {
-        headers: { Authorization: `Bearer ${TOKEN}` },
-      });
+      await axios.post(
+        `${BASE_URL}/quiz/sessions/${id}/join`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${TOKEN}` },
+        }
+      );
 
       toast.success("Successfully joined session 🎉");
 
@@ -216,10 +225,12 @@ const SchoolAssessmentPanel = () => {
             {selectedSession.difficulties?.join(", ")}
           </div>
           <div className="mb-2">
-            <span className="font-semibold">Status:</span> {selectedSession.status}
+            <span className="font-semibold">Status:</span>{" "}
+            {selectedSession.status}
           </div>
           <div className="mb-2">
-            <span className="font-semibold">Answers Submitted:</span> {selectedSession.answers}
+            <span className="font-semibold">Answers Submitted:</span>{" "}
+            {selectedSession.answers}
           </div>
 
           <div className="mt-4">
@@ -248,14 +259,23 @@ const Section = ({ title, children }) => (
   <section className="w-full max-w-5xl mb-10">
     {/* <h2 className="text-[16px] sm:text-xl font-semibold text-[#001489] mb-4 text-center">{title}</h2> */}
     <h2 className="text-[16px] sm:text-xl font-semibold text-[#001489] mb-4  md:text-left">
-  {title}
-</h2>
+      {title}
+    </h2>
 
     <div className="grid gap-6 sm:grid-cols-2">{children}</div>
   </section>
 );
 
-const SessionCard = ({ session, actionLabel, onAction, onView, loadingJoin, loadingView }) => {
+const SessionCard = ({
+  session,
+  actionLabel,
+  onAction,
+  onView,
+  loadingJoin,
+  loadingView,
+}) => {
+  const navigate = useNavigate();
+
   const statusColor = {
     active: "bg-green-100 text-green-800",
     pending: "bg-yellow-100 text-yellow-800",
@@ -265,15 +285,23 @@ const SessionCard = ({ session, actionLabel, onAction, onView, loadingJoin, load
   return (
     <div className="border border-gray-200 p-5 rounded-xl shadow-md flex flex-col justify-between hover:shadow-xl transition-shadow duration-300 group">
       <div>
-        <h3 className="font-bold text-[16px] sm:text-lg text-[#001489] mb-2">{session.name}</h3>
+        <h3 className="font-bold text-[16px] sm:text-lg text-[#001489] mb-2">
+          {session.name}
+        </h3>
         <p className="text-sm text-gray-500 mb-1">
-          Categories: <span className="font-medium">{session.categories?.join(", ")}</span>
+          Categories:{" "}
+          <span className="font-medium">{session.categories?.join(", ")}</span>
         </p>
         <p className="text-sm text-gray-500 mb-1">
-          Difficulty: <span className="font-medium">{session.difficulties?.join(", ")}</span>
+          Difficulty:{" "}
+          <span className="font-medium">
+            {session.difficulties?.join(", ")}
+          </span>
         </p>
         <span
-          className={`inline-block px-2 py-1 rounded-full text-xs font-semibold ${statusColor[session.status] || "bg-gray-100 text-gray-800"}`}
+          className={`inline-block px-2 py-1 rounded-full text-xs font-semibold ${
+            statusColor[session.status] || "bg-gray-100 text-gray-800"
+          }`}
         >
           {session.status.toUpperCase()}
         </span>
@@ -296,10 +324,21 @@ const SessionCard = ({ session, actionLabel, onAction, onView, loadingJoin, load
         >
           {loadingView ? "Loading..." : "View"}
         </button>
+        <button
+          onClick={() =>
+            navigate(`/quiz/${session.id}`, {
+              state: { sessionId: session.id },
+            })
+          }
+          className="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700"
+        >
+          Fetch Quiz
+        </button>
       </div>
 
       <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sm text-gray-400">
-        Participants: {session.participants?.length || 0} | Answers: {session.answers || 0}
+        Participants: {session.participants?.length || 0} | Answers:{" "}
+        {session.answers || 0}
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { FaUsers, FaCalendarCheck } from "react-icons/fa";
 import { PiMedalBold } from "react-icons/pi";
@@ -110,13 +109,13 @@ const UserDashboard = () => {
         const response = await axios.post(`${baseUrl}/students`, payload, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setStudents([...students, response.data]); // Use server response
+        setStudents([...students, response.data]);
         toast.success("Student added successfully!");
       }
       reset();
       setShowModal(false);
       fetchStudentCount();
-      fetchGrades(); // refresh grades in case new grade added
+      fetchGrades();
     } catch (error) {
       console.error(error);
       toast.error(error.response?.data?.message || "Something went wrong");

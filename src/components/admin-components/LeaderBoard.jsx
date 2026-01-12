@@ -179,7 +179,7 @@ const PlatformAdminLeaderboard = () => {
                 ) : (
                   others.map((school, index) => (
                     <tr key={school.id} className="border-t border-black/5 hover:bg-black/5 transition">
-                      <td className="px-3 py-2 font-medium text-black">#{index + 4}</td>
+                      <td className="px-3 py-2 font-medium text-black">{index + 4}</td>
                       <td className="px-3 py-2 text-black">{school.schoolName}</td>
                       <td className="px-3 py-2 text-right font-semibold text-black">{school.totalScore?.toLocaleString()}</td>
                       <td className="px-3 py-2 text-right text-black">{school.totalCorrectAnswers}</td>

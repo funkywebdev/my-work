@@ -260,7 +260,7 @@ const Nav2 = () => {
     fetchUser();
   }, []);
 
-  const userName = user?.name || (loadingUser ? "Loading..." : "Guest");
+  const userName = user?.firstName || (loadingUser ? "Loading..." : "Guest");
   const userEmail = user?.email || (loadingUser ? "Loading..." : "");
 
   return (
