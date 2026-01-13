@@ -34,7 +34,7 @@ const teamMembers = [
     img: Funke,
     name: "Iyiola Funke",
     role: "Frontend Developer",
-    bio: "Iyiola Funke is a Frontend Developer with 1 years of experience creating responsive and user-friendly web applications. Skilled in React, Tailwind CSS, and JavaScript, with a focus on clean code and seamless user experiences."
+    bio: "Iyiola Funke is a Frontend Developer with  years of experience creating responsive and user-friendly web applications. Skilled in React, Tailwind CSS, and JavaScript, with a focus on clean code and seamless user experiences."
   },
   {
     img: khirat,

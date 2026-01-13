@@ -18,7 +18,7 @@ const Contact = () => {
 
     const formData = new FormData(form.current);
   formData.forEach((value, key) => {
-    console.log(key, value); // should log school_name, email, subject, message
+    console.log(key, value); 
   });
 
     emailjs
