@@ -325,6 +325,68 @@ const SchoolInformation = () => {
               <p className="text-red-500 text-sm">{errors.logo?.message}</p>
             </div>
 
+
+            <div className="sm:col-span-2 p-6 text-center border border-dashed border-gray-400 rounded-lg">
+  <h1 className="text-lg font-semibold mb-2">
+    Account Name: <span className="font-normal">Tech-Pro Edutech Consulting LTD</span>
+  </h1>
+
+  <p className="text-sm">Account Number: <strong>0061481312</strong></p>
+  <p className="text-sm mb-4">Bank: <strong>Unity Bank</strong></p>
+
+  <Download className="mx-auto mb-3 text-gray-600" size={28} />
+
+  <p className="font-semibold mb-3">Upload Payment Receipt</p>
+
+  <input
+    type="file"
+    accept="image/*,.pdf"
+    {...register("logo", { required: "Payment receipt is required" })}
+    className="hidden"
+    ref={fileInputRef}
+    onChange={(e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      setValue("logo", file);
+      trigger("logo");
+    }}
+  />
+
+  <button
+    type="button"
+    onClick={() => fileInputRef.current?.click()}
+    className="px-6 py-2 bg-[#001489] text-white rounded hover:bg-[#000f66] transition"
+  >
+    Browse File
+  </button>
+
+  {watch("logo") && (
+    <div className="mt-3">
+      {watch("logo").type.startsWith("image/") ? (
+        <img
+          src={URL.createObjectURL(watch("logo"))}
+          alt="Payment receipt preview"
+          className="mx-auto h-32 object-contain rounded border"
+        />
+      ) : (
+        <p className="text-green-600 font-medium">
+          {watch("logo").name}
+        </p>
+      )}
+    </div>
+  )}
+
+  {errors.logo && (
+    <p className="text-red-500 text-sm mt-2">
+      {errors.logo.message}
+    </p>
+  )}
+</div>
+
+
+
+
             {/* SUBMIT BUTTON */}
             <div className="sm:col-span-2 text-right">
               <button

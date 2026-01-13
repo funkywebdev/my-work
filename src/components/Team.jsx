@@ -1,85 +1,64 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Frame97 from "../assets/images/Frame97.png";
-import Frame97a from "../assets/images/Frame97a.png";
-import Frame97b from "../assets/images/Frame97b.png";
-import Frame97c from "../assets/images/Frame97c.png";
-import Frame97d from "../assets/images/Frame97d.png";
-import Frame97e from "../assets/images/Frame97e.png";
-import Frame97f from "../assets/images/Frame97f.png";
+
+// Images
+import khirat from "../assets/images/khirat.jpeg";
+import Oladipo from "../assets/images/Oladipo.jpeg";
+import Vera from "../assets/images/Vera.jpeg";
+import Tega from "../assets/images/Tega.jpeg";
+import Funke from "../assets/images/Funke.jpeg";
+import John from "../assets/images/John.jpeg";
 
 const teamMembers = [
   {
-    img: Frame97,
-    name: "Engr. Mikeal Aleem",
-    role: "President",
-    gender: "Male",
-    department: "Engineering",
-    hobbies: "Reading, Traveling, Mentorship",
+    img: Oladipo,
+    name: "Oladipo Bolodeoku",
+    role: "Founder and CFO",
+    bio:
+     "Oladipo Bolodeoku is a results-driven CFO with strong financial leadership across energy, technology, and operations. He is also the Founder of BOLO Quiz League, driving innovation in education through technology. He believes finance should guide growth, protect integrity, and turn numbers into clear direction."
   },
   {
-    img: Frame97a,
-    name: "Funke Ade",
-    role: "Vice President",
-    gender: "Female",
-    department: "Design",
-    hobbies: "Drawing, UI Design, Fashion",
+    img: Tega,
+    name: "Oladuntoye Oluwaseun",
+    role: "Co-Founder and COO",
+    bio:
+      "Oluwaseun Oladuntoye is a business analyst, product manager, and Co-Founder of BOLO Quiz League. Leverages over 7 years of software engineering experience to manage operations on ground, drive innovation, and turn ideas into working solutions."
   },
   {
-    img: Frame97b,
-    name: "Ayo Smith",
-    role: "Graphic Designer",
-    gender: "Male",
-    department: "Media",
-    hobbies: "Sketching, Branding, Photography",
+    img: John,
+    name: "John Omotosho",
+    role: "Backend Developer",
+    bio: "John Omotosho is a software engineer with 4+ years of experience designing and building scalable backend systems, intelligent applications, and high-performance digital products."
   },
   {
-    img: Frame97c,
-    name: "Mikeal",
-    role: "Tester",
-    gender: "Male",
-    department: "Quality Assurance",
-    hobbies: "Gaming, Testing, Reading",
+    img: Funke,
+    name: "Iyiola Funke",
+    role: "Frontend Developer",
+    bio: "Iyiola Funke is a Frontend Developer with 1 years of experience creating responsive and user-friendly web applications. Skilled in React, Tailwind CSS, and JavaScript, with a focus on clean code and seamless user experiences."
   },
   {
-    img: Frame97d,
-    name: "Sarah Lee",
-    role: "Backend Dev",
-    gender: "Female",
-    department: "Software Engineering",
-    hobbies: "Coding, AI Research, Music",
+    img: khirat,
+    name: "Khairat Abolarin",
+    role: "Product Designer",
+    bio: "Khairat Abolarin is a talented Product Designer who creates intuitive and engaging digital experiences. She combines creativity with user-centered design principles to craft visually appealing and functional products that delight users."
   },
   {
-    img: Frame97e,
-    name: "Tunde Ola",
-    role: "Frontend Dev",
-    gender: "Male",
-    department: "Web Development",
-    hobbies: "Design, Music, Football",
-  },
-  {
-    img: Frame97f,
-    name: "Janet Cole",
-    role: "Support",
-    gender: "Female",
-    department: "Customer Success",
-    hobbies: "Helping People, Reading",
-  },
-  {
-    img: Frame97f,
-    name: "Janet Cole",
-    role: "Support",
-    gender: "Female",
-    department: "Customer Success",
-    hobbies: "Helping People, Reading",
+    img: Vera,
+    name: "Vera Prestige Oloruntoba",
+    role: "Project Support",
+    bio: "Vera Prestige Oloruntoba supports project activities through coordination, communication, and administrative assistance, contributing to the overall success of the project."
   },
 ];
+
 
 const Team = () => {
   const [selectedMember, setSelectedMember] = useState(null);
 
   return (
-    <section id="Team" className="px-6 sm:px-16 md:px-20 lg:px-24 font-poppins py-10">
+    <section
+      id="Team"
+      className="px-6 sm:px-16 md:px-20 lg:px-24 font-poppins py-10"
+    >
       {/* Heading */}
       <div className="mb-12 text-center">
         <p className="text-3xl font-bold sm:text-4xl">Meet the Team</p>
@@ -90,9 +69,9 @@ const Team = () => {
 
       {/* Team Grid */}
       <div className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 justify-items-center">
-        {teamMembers.map((member, index) => (
+        {teamMembers.map((member) => (
           <motion.div
-            key={index}
+            key={member.name}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             className="flex flex-col items-center cursor-pointer"
@@ -102,8 +81,7 @@ const Team = () => {
               alt={member.name}
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="object-cover w-64 h-64 mb-3 border-4 border-[#001489] rounded-xl shadow-md hover:shadow-lg transition-all"
+              className="object-cover w-64 h-74 mb-3 border-4 border-[#001489] rounded-xl shadow-md hover:shadow-lg transition-all"
             />
             <p className="text-lg font-semibold text-center">{member.name}</p>
             <p className="text-sm text-gray-500 text-center">{member.role}</p>
@@ -121,7 +99,7 @@ const Team = () => {
       <AnimatePresence>
         {selectedMember && (
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-60 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -140,23 +118,26 @@ const Team = () => {
                 alt={selectedMember.name}
                 className="object-cover w-64 h-64 mx-auto mb-4 border-4 border-[#001489] rounded-xl"
               />
-              <p className="text-2xl font-bold text-[#001489]">{selectedMember.name}</p>
-              <p className="mt-1 font-medium text-gray-600">{selectedMember.role}</p>
 
-              <div className="mt-4 space-y-1 text-left text-gray-700">
-                <p><strong>Gender:</strong> {selectedMember.gender}</p>
-                <p><strong>Department:</strong> {selectedMember.department}</p>
-                <p><strong>Hobbies:</strong> {selectedMember.hobbies}</p>
-              </div>
+              <p className="text-2xl font-bold text-[#001489]">
+                {selectedMember.name}
+              </p>
+              <p className="mt-1 font-medium text-gray-600">
+                {selectedMember.role}
+              </p>
 
-              <div className="flex justify-center gap-3 mt-5">
-                <button
-                  className="px-4 py-2 bg-[#001489] text-white rounded-lg hover:bg-[#001aa9] transition-all"
-                  onClick={() => setSelectedMember(null)}
-                >
-                  Close
-                </button>
-              </div>
+              {selectedMember.bio && (
+                <div className="mt-4 text-left text-gray-700 whitespace-pre-wrap">
+                  {selectedMember.bio}
+                </div>
+              )}
+
+              <button
+                className="mt-6 px-6 py-2 bg-[#001489] text-white rounded-lg hover:bg-[#001aa9] transition-all"
+                onClick={() => setSelectedMember(null)}
+              >
+                Close
+              </button>
             </motion.div>
           </motion.div>
         )}

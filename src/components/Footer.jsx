@@ -85,20 +85,51 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Social Links */}
-          <div className="flex flex-col items-center lg:items-start">
-            <h4 className="text-white font-semibold mb-2">Follow Us</h4>
-            <div className="flex items-center gap-4 mt-2 justify-center">
-              {[facebook, tiktok, Group, linkedin].map((icon, idx) => (
-                <img
-                  key={idx}
-                  src={icon}
-                  alt="social icon"
-                  className="w-6 h-6 cursor-pointer hover:opacity-80 transition"
-                />
-              ))}
-            </div>
-          </div>
+          
+{/* Social Links */}
+<div className="flex flex-col items-center lg:items-start">
+  <h4 className="text-white font-semibold mb-2">Follow Us</h4>
+
+  <div className="flex items-center gap-4 mt-2 justify-center">
+    {[
+      {
+        icon: facebook,
+        link: "https://www.facebook.com/share/1A6MuerPbL/",
+        name: "Facebook",
+      },
+      {
+        icon: tiktok,
+        link: "https://www.tiktok.com/@boloql?_r=1&_t=ZS-932QM9wcuUK",
+        name: "TikTok",
+      },
+      {
+        icon: Group,
+        link: "https://instagram.com/yourpage",
+        name: "Instagram",
+      },
+      {
+        icon: linkedin,
+        link: "https://linkedin.com/company/yourpage",
+        name: "LinkedIn",
+      },
+    ].map((item, idx) => (
+      <a
+        key={idx}
+        href={item.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={item.name}
+      >
+        <img
+          src={item.icon}
+          alt={item.name}
+          className="w-6 h-6 cursor-pointer hover:opacity-80 transition"
+        />
+      </a>
+    ))}
+  </div>
+</div>
+
         </div>
 
         {/* Footer Bottom */}
