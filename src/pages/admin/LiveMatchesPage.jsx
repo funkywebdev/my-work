@@ -1,10 +1,12 @@
+
 import React, { useState } from "react";
 import Sidebar from "../../components/admin-components/Sidebar";
 import Header from "../../components/admin-components/Header";
-import Matches from "../../components/admin-components/Matches";
+import LiveMatches from "../../components/admin-components/LiveMatches"
 
 
-const MatchPage = () => {
+
+const LiveMatchesPage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [selectedTab, setSelectedTab] = useState("Dashboard");
 
@@ -17,18 +19,20 @@ const MatchPage = () => {
 
       {/* Main Content */}
       <div
-        className={`flex-1 flex flex-col transition-all duration-300 p-4
-          ${sidebarOpen ? "ml-60" : "ml-16"} md:ml-2
+        className={`flex-1 flex flex-col transition-all duration-300
+          ${sidebarOpen ? "ml-60" : "ml-16"} md:ml-2 h-screen overflow-y-auto p-4
         `}
       >
         {/* Header */}
          <Header />
 
         {/* Dynamic content */}
-        <Matches />
+         <div className="w-full overflow-x-auto">
+         <LiveMatches />
+        </div>
       </div>
     </div>
   );
 };
 
-export default MatchPage;
+export default LiveMatchesPage;

@@ -83,8 +83,7 @@ import SchoolPage from "./pages/admin/SchoolPage";
 import AdminbracketPage from "./pages/admin/AdminbracketPage";
 import QuestionPage from "./pages/admin/QuestionPage";
 import LeaderPage from "./pages/admin/LeaderPage";
-import ReportPage from "./pages/admin/ReportPage";
-import MatchPage from "./pages/admin/MatchPage"; 
+import LiveMatchesPage from "./pages/admin/LiveMatchesPage";
 import NotificationPage from "./pages/admin/NotificationPage";
 
 import { ToastContainer } from "react-toastify";
@@ -130,8 +129,7 @@ const App = () => {
           <Route path="/adminbracket" element={<AdminbracketPage />} />
           <Route path="/question" element={<QuestionPage />} />
           <Route path="/board" element={<LeaderPage />} />
-          <Route path="/live" element={<MatchPage />} />
-          <Route path="/report" element={<ReportPage />} />
+          <Route path="/live-matches" element={<LiveMatchesPage />} />
           <Route path="/notification" element={<NotificationPage />} />
         </Route>
 

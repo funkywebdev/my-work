@@ -19,7 +19,7 @@ const schema = yup.object().shape({
   questionLimit: yup.number().positive().integer().required(),
 });
 
-const Report = () => {
+const LiveMatches = () => {
   const [sessions, setSessions] = useState([]);
   const [selectedSession, setSelectedSession] = useState(null);
   const [showCreate, setShowCreate] = useState(false);
@@ -351,4 +351,4 @@ const CreateSessionModal = ({ onClose, onCreate, loading }) => {
   );
 };
 
-export default Report;
+export default LiveMatches;
