@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
 // Images
 import khirat from "../assets/images/khirat.jpeg";
 import Oladipo from "../assets/images/Oladipo.jpeg";
@@ -15,7 +14,7 @@ const teamMembers = [
     name: "Oladipo Bolodeoku",
     role: "Founder and CFO",
     bio:
-     "Oladipo Bolodeoku is a results-driven CFO with strong financial leadership across energy, technology, and operations. He is also the Founder of BOLO Quiz League, driving innovation in education through technology. He believes finance should guide growth, protect integrity, and turn numbers into clear direction."
+     "Oladipo Bolodeoku is a Founder, CEO, and CFO with a sharp eye for value, risk, and long-term sustainability. He blends strategic leadership with disciplined financial thinking across energy, technology, and operations—ensuring bold ideas remain affordable, accountable, and resilient."
   },
   {
     img: Tega,

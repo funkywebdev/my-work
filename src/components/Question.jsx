@@ -31,7 +31,7 @@ const faqs = [
   {
     question: "Is there a registration fee?",
     answer:
-      "No. Participation in the Bolo League is completely free for all registered schools and their students.",
+      "Yes. There is a non-refundable registration fee of ₦20,000 per school to participate in the Bolo League.",
   },
 ];
 
