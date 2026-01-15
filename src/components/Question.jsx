@@ -11,7 +11,7 @@ const faqs = [
   {
     question: "Who can participate in the Bolo League?",
     answer:
-      "For now, participation is open only to secondary school students in Osun State, Nigeria.",
+      "Bolo League is a Nationwide Program All states in Nigeria will be involved."
   },
   {
     question: "Can I register by myself?",
@@ -19,9 +19,9 @@ const faqs = [
       "No. Students cannot register individually — only schools in Osun State can register their students for the competition.",
   },
   {
-    question: "Will the Bolo League expand beyond Osun State?",
+    question: "Will BoloQuiz be an initiative for all states?",
     answer:
-      "Yes! The League plans to expand to more states across Nigeria and eventually to other African countries in future seasons.",
+      "Yes, Osun is the pioneering state, however subsequently, other states will be involved.",
   },
   {
     question: "What do winners receive?",

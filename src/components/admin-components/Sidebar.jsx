@@ -300,7 +300,7 @@ const Sidebar = ({ open, setOpen }) => {
             >
               <li
                 className={`flex items-center
-                gap-3 md:gap-3 lg:gap-4
+                gap-3 md:gap-5 lg:gap-5
                 p-2 md:p-2
                 my-2 md:my-3
                 rounded-lg transition-all duration-200
