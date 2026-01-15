@@ -28,11 +28,6 @@ const faqs = [
     answer:
       "Top-performing students and schools receive certificates, recognition, mentorship opportunities, and exciting prizes.",
   },
-  {
-    question: "Is there a registration fee?",
-    answer:
-      "Yes. There is a non-refundable registration fee of ₦20,000 per school to participate in the Bolo League.",
-  },
 ];
 
 const Question = () => {
