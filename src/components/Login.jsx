@@ -134,6 +134,7 @@
 
 
 
+
 import React, { useState } from "react";
 import Frame66 from "../assets/images/Frame66.png";
 import { useForm } from "react-hook-form";
@@ -156,32 +157,42 @@ const SchoolAdminLogin = () => {
   const onSubmit = async (data) => {
     setLoading(true);
 
+    // Clear previous login info
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("schoolId");
+
     try {
       const response = await axios.post(`${baseUrl}/auth/login`, data);
-
       const { access_token, user, message } = response.data;
 
       console.log("LOGIN RESPONSE:", response.data);
-      console.log("ROLE:", user.role);
+      console.log("ROLE RECEIVED:", user.role);
+      console.log("SCHOOLS:", user.schools);
+
+      if (!user || !user.role) {
+        toast.error("Invalid login response from server");
+        return;
+      }
+
+      const role = user.role.toLowerCase();
 
       // ================= PLATFORM ADMIN =================
-      if (user.role === "platform_admin") {
+      if (role === "platform_admin") {
         localStorage.setItem("token", access_token);
         localStorage.setItem("role", "platform_admin");
 
-        toast.success(message || "Admin login successful!");
-        setTimeout(() => navigate("/adminlogin"), 1200);
+        toast.success(message || "Admin login successful!", {
+          onClose: () => navigate("/adminlogin"),
+          autoClose: 1200,
+        });
         return;
       }
 
       // ================= SCHOOL ADMIN =================
-      if (user.role === "school_admin") {
-        // Check school approval
-        if (
-          !user.schools ||
-          user.schools.length === 0 ||
-          !user.schools[0].isApproved
-        ) {
+      if (role === "school_admin") {
+        const school = user.schools?.[0];
+        if (!school || !school.isApproved) {
           toast.info(
             "Your school is not yet approved. Please wait for platform admin approval."
           );
@@ -190,16 +201,17 @@ const SchoolAdminLogin = () => {
 
         localStorage.setItem("token", access_token);
         localStorage.setItem("role", "school_admin");
-        localStorage.setItem("schoolId", user.schools[0].id);
+        localStorage.setItem("schoolId", school.id);
 
-        toast.success(message || "School login successful!");
-        setTimeout(() => navigate("/roaster"), 1200);
+        toast.success(message || "School login successful!", {
+          onClose: () => navigate("/roaster"),
+          autoClose: 1200,
+        });
         return;
       }
 
       // ================= UNKNOWN ROLE =================
       toast.error("Access denied: Unauthorized user role");
-
     } catch (error) {
       const msg = error.response?.data?.message || "Login failed!";
       toast.error(msg);
@@ -213,7 +225,6 @@ const SchoolAdminLogin = () => {
       <ToastContainer />
 
       <div className="bg-white shadow-lg rounded-2xl overflow-hidden w-full max-w-4xl grid grid-cols-1 md:grid-cols-2">
-
         {/* FORM */}
         <div className="order-1 md:order-2 p-8 md:p-12 flex flex-col justify-center">
           <h1 className="text-2xl md:text-3xl font-bold text-[#001489] mb-6 text-center">
@@ -221,7 +232,6 @@ const SchoolAdminLogin = () => {
           </h1>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-
             {/* EMAIL */}
             <div className="flex flex-col gap-1">
               <label className="text-sm font-medium text-gray-700">
@@ -238,9 +248,7 @@ const SchoolAdminLogin = () => {
                 }`}
                 {...register("email", { required: "Email is required" })}
               />
-              <p className="text-red-500 text-xs">
-                {errors.email?.message}
-              </p>
+              <p className="text-red-500 text-xs">{errors.email?.message}</p>
             </div>
 
             {/* PASSWORD */}
@@ -257,13 +265,9 @@ const SchoolAdminLogin = () => {
                     ? "border-red-500 focus:ring-2 focus:ring-red-400"
                     : "border-gray-300 focus:ring-2 focus:ring-[#001489]"
                 }`}
-                {...register("password", {
-                  required: "Password is required",
-                })}
+                {...register("password", { required: "Password is required" })}
               />
-              <p className="text-red-500 text-xs">
-                {errors.password?.message}
-              </p>
+              <p className="text-red-500 text-xs">{errors.password?.message}</p>
             </div>
 
             {/* FORGOT PASSWORD */}
