@@ -177,13 +177,15 @@ const SchoolAdminLogin = () => {
 
       const role = user.role.toLowerCase();
 
+      console.log(role);
+
       // ================= PLATFORM ADMIN =================
       if (role === "platform_admin") {
-        localStorage.setItem("token", access_token);
+        localStorage.setItem("adminToken", access_token);
         localStorage.setItem("role", "platform_admin");
 
         toast.success(message || "Admin login successful!", {
-          onClose: () => navigate("/adminlogin"),
+          onClose: () =>   navigate("/admindashboard"),
           autoClose: 1200,
         });
         return;
@@ -199,12 +201,12 @@ const SchoolAdminLogin = () => {
           return;
         }
 
-        localStorage.setItem("token", access_token);
+        localStorage.setItem("schoolToken", access_token);
         localStorage.setItem("role", "school_admin");
         localStorage.setItem("schoolId", school.id);
 
         toast.success(message || "School login successful!", {
-          onClose: () => navigate("/roaster"),
+          onClose: () =>  navigate("/dashboard"),
           autoClose: 1200,
         });
         return;

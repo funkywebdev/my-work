@@ -3,9 +3,10 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 const ProtectedRoute = () => {
   const token = localStorage.getItem("schoolToken");
+  const adminToken = localStorage.getItem("adminToken");
 
 
-  if (!token) {
+  if (!token && !adminToken) {
     return <Navigate to="/login" replace />;
   }
 

@@ -107,7 +107,7 @@ const App = () => {
         <Route path="/school" element={<SchoolinfoPage />} />
         <Route path="/reset" element={<ResetPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
-        <Route path="/adminlogin" element={<AdminloginPage />} />
+        {/* <Route path="/adminlogin" element={<AdminloginPage />} /> */}
 
 
         {/* USER PROTECTED ROUTES */}
