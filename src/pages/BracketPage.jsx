@@ -8,7 +8,7 @@ const BracketPage = () => {
     <div>
       <Nav2 />
       <Bracket />
-     <Footer />
+     <Footer /> 
     </div>
   )
 }

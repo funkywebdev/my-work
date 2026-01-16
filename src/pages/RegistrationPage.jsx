@@ -4,9 +4,7 @@ import SchoolInformation from '../components/SchoolInformation';
 const RegistrationPage = () => {
    return (
     <>
-  
     <SchoolInformation />
-    
     </>
   );
 };

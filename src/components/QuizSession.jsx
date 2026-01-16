@@ -1,14 +1,13 @@
+
+
+
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
- 
 
 const BASE_URL = "https://bql-production.up.railway.app";
-const TOKEN = localStorage.getItem("schoolToken");
-
-//console.log("School Token:", TOKEN);
 
 // Words to rotate under the heading
 const rotatingTexts = [
@@ -19,7 +18,11 @@ const rotatingTexts = [
 ];
 
 const SchoolAssessmentPanel = () => {
-  
+  const navigate = useNavigate();
+
+  // 🔑 TOKEN MUST BE STATE (FIX)
+  const [token, setToken] = useState(null);
+
   const [availableSessions, setAvailableSessions] = useState([]);
   const [mySessions, setMySessions] = useState([]);
   const [selectedSession, setSelectedSession] = useState(null);
@@ -28,7 +31,20 @@ const SchoolAssessmentPanel = () => {
   const [pageLoading, setPageLoading] = useState(true);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
 
-  // Rotate text every 3 seconds
+  // ================= GET TOKEN =================
+  useEffect(() => {
+    const storedToken = localStorage.getItem("schoolToken");
+
+    if (!storedToken) {
+      toast.error("No school admin token found. Please login.");
+      setPageLoading(false);
+      return;
+    }
+
+    setToken(storedToken);
+  }, []);
+
+  // ================= TEXT ROTATION =================
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTextIndex((prev) => (prev + 1) % rotatingTexts.length);
@@ -50,6 +66,7 @@ const SchoolAssessmentPanel = () => {
 
     if (status === 401) {
       toast.error("Session expired. Please login again.");
+      navigate("/login");
     } else if (status === 403) {
       toast.error("You are not allowed to perform this action.");
     } else if (status >= 500) {
@@ -61,36 +78,22 @@ const SchoolAssessmentPanel = () => {
 
   // ================= FETCH DATA =================
   const fetchAvailableSessions = async () => {
-    try {
-      const res = await axios.get(`${BASE_URL}/quiz/sessions/available`, {
-        headers: { Authorization: `Bearer ${TOKEN}` },
-      });
-      //console.log(res.data);
-      return res.data;
-    } catch (err) {
-      handleAxiosError(err, "FETCH AVAILABLE ERROR:");
-      return [];
-    }
+    const res = await axios.get(`${BASE_URL}/quiz/sessions/available`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
   };
 
   const fetchMySessions = async () => {
-    try {
-      const res = await axios.get(`${BASE_URL}/quiz/school/sessions`, {
-        headers: { Authorization: `Bearer ${TOKEN}` },
-      });
-      return res.data;
-    } catch (err) {
-      handleAxiosError(err, "FETCH MY SESSIONS ERROR:");
-      return [];
-    }
+    const res = await axios.get(`${BASE_URL}/quiz/school/sessions`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
   };
 
+  // ================= LOAD DATA (FIXED) =================
   useEffect(() => {
-    if (!TOKEN) {
-      toast.error("No school admin token found. Please login.");
-      setPageLoading(false);
-      return;
-    }
+    if (!token) return;
 
     const loadData = async () => {
       try {
@@ -98,15 +101,18 @@ const SchoolAssessmentPanel = () => {
           fetchAvailableSessions(),
           fetchMySessions(),
         ]);
+
         setAvailableSessions(available);
         setMySessions(mine);
+      } catch (err) {
+        handleAxiosError(err, "FETCH DATA ERROR:");
       } finally {
         setPageLoading(false);
       }
     };
 
     loadData();
-  }, []);
+  }, [token]);
 
   // ================= ACTIONS =================
   const joinSession = async (id) => {
@@ -116,7 +122,7 @@ const SchoolAssessmentPanel = () => {
         `${BASE_URL}/quiz/sessions/${id}/join`,
         {},
         {
-          headers: { Authorization: `Bearer ${TOKEN}` },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
 
@@ -136,10 +142,10 @@ const SchoolAssessmentPanel = () => {
     try {
       const [answersRes, participantsRes] = await Promise.all([
         axios.get(`${BASE_URL}/quiz/sessions/${session.id}/answers`, {
-          headers: { Authorization: `Bearer ${TOKEN}` },
+          headers: { Authorization: `Bearer ${token}` },
         }),
         axios.get(`${BASE_URL}/quiz/sessions/${session.id}/participants`, {
-          headers: { Authorization: `Bearer ${TOKEN}` },
+          headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
 
@@ -215,39 +221,6 @@ const SchoolAssessmentPanel = () => {
           <h2 className="text-2xl font-bold text-[#001489] mb-4">
             {selectedSession.name}
           </h2>
-
-          <div className="mb-2">
-            <span className="font-semibold">Categories:</span>{" "}
-            {selectedSession.categories?.join(", ")}
-          </div>
-          <div className="mb-2">
-            <span className="font-semibold">Difficulty:</span>{" "}
-            {selectedSession.difficulties?.join(", ")}
-          </div>
-          <div className="mb-2">
-            <span className="font-semibold">Status:</span>{" "}
-            {selectedSession.status}
-          </div>
-          <div className="mb-2">
-            <span className="font-semibold">Answers Submitted:</span>{" "}
-            {selectedSession.answers}
-          </div>
-
-          <div className="mt-4">
-            <p className="font-semibold mb-2">Participants</p>
-            {selectedSession.participants.length === 0 ? (
-              <p>No participants yet</p>
-            ) : (
-              selectedSession.participants.map((p, i) => (
-                <div
-                  key={i}
-                  className="bg-[#001489] text-white p-2 rounded mt-1 text-sm"
-                >
-                  {p}
-                </div>
-              ))
-            )}
-          </div>
         </SidePanel>
       )}
     </div>
@@ -255,13 +228,12 @@ const SchoolAssessmentPanel = () => {
 };
 
 /* ================= REUSABLE COMPONENTS ================= */
+
 const Section = ({ title, children }) => (
   <section className="w-full max-w-5xl mb-10">
-    {/* <h2 className="text-[16px] sm:text-xl font-semibold text-[#001489] mb-4 text-center">{title}</h2> */}
-    <h2 className="text-[16px] sm:text-xl font-semibold text-[#001489] mb-4  md:text-left">
+    <h2 className="text-[16px] sm:text-xl font-semibold text-[#001489] mb-4 md:text-left">
       {title}
     </h2>
-
     <div className="grid gap-6 sm:grid-cols-2">{children}</div>
   </section>
 );
@@ -307,12 +279,13 @@ const SessionCard = ({
         </span>
       </div>
 
-      <div className="flex gap-2 mt-4">
+      <div className="flex gap-2 mt-4  flex-wrap sm:flex-nowrap">
         {actionLabel && (
           <button
             onClick={onAction}
             disabled={loadingJoin}
-            className="flex-1 bg-[#001489] text-white px-4 py-2 rounded-lg font-medium hover:bg-[#0022cc] transition-colors duration-200 disabled:opacity-50"
+            className="flex-1 bg-[#001489] text-white px-4 py-1.5 text-xs
+    sm:px-4 sm:py-2 sm:text-sm rounded-lg font-medium hover:bg-[#0022cc] transition-colors duration-200 disabled:opacity-50"
           >
             {loadingJoin ? "Processing..." : actionLabel}
           </button>
@@ -320,17 +293,19 @@ const SessionCard = ({
         <button
           onClick={onView}
           disabled={loadingView}
-          className="flex-1 border border-[#001489] text-[#001489] px-4 py-2 rounded-lg font-medium hover:bg-[#001489] hover:text-white transition-colors duration-200 disabled:opacity-50"
+          className="flex-1 border border-[#001489] text-[#001489] px-4 py-1.5 text-xs
+    sm:px-4 sm:py-2 sm:text-sm rounded-lg font-medium hover:bg-[#001489] hover:text-white transition-colors duration-200 disabled:opacity-50"
         >
           {loadingView ? "Loading..." : "View"}
-        </button>
+        </button>  
         <button
           onClick={() =>
             navigate(`/quiz/${session.id}`, {
               state: { sessionId: session.id },
             })
           }
-          className="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700"
+          className="flex-1 bg-green-600 text-white px-4 py-1.5 text-xs
+    sm:px-4 sm:py-2 sm:text-sm rounded-lg text-sm hover:bg-green-700"
         >
           Fetch Quiz
         </button>
@@ -359,3 +334,8 @@ const SidePanel = ({ children, onClose }) => (
 );
 
 export default SchoolAssessmentPanel;
+
+
+
+
+

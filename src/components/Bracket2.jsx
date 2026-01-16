@@ -5,7 +5,7 @@ import { io } from "socket.io-client";
 
 
 
-const Bracket = ({ baseUrl = "https://api.example.com", token = "" }) => {
+const Bracket = ({ baseUrl = "https://bql-production.up.railway.app", token = "adminToken" }) => {
   // auth
   const [authToken, setAuthToken] = useState(token);
 
