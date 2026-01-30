@@ -7,6 +7,8 @@ import Vera from "../assets/images/Vera.jpeg";
 import Tega from "../assets/images/Tega.jpeg";
 import Funke from "../assets/images/Funke.jpeg";
 import John from "../assets/images/John.jpeg";
+import latifat from "../assets/images/latifat.jpeg";
+
 
 const teamMembers = [
   {
@@ -42,6 +44,12 @@ const teamMembers = [
     bio: "Khairat Abolarin is a talented Product Designer who creates intuitive and engaging digital experiences. She combines creativity with user-centered design principles to craft visually appealing and functional products that delight users."
   },
   {
+    img: latifat,
+    name: "Jimoh lateefat",
+    role: "Graphics Designer",
+    bio: "Jimoh lateefat is a Graphics Designer who focused on creating visually compelling designs that communicate clearly. She create designs that connect with the right audience from brand identity to digital and print designs."
+  },
+  {
     img: Vera,
     name: "Vera Prestige Oloruntoba",
     role: "Project Support",
@@ -75,13 +83,21 @@ const Team = () => {
             whileTap={{ scale: 0.95 }}
             className="flex flex-col items-center cursor-pointer"
           >
+            
             <motion.img
-              src={member.img}
-              alt={member.name}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="object-cover w-64 h-74 mb-3 border-4 border-[#001489] rounded-xl shadow-md hover:shadow-lg transition-all"
-            />
+            src={member.img}
+            alt={member.name}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`object-cover w-64 h-74 mb-3 border-4 border-[#001489] rounded-xl shadow-md
+              ${
+                member.name === "Jimoh lateefat"
+                  ? "object-top"
+                  : "object-center"
+              }
+            `}
+          />
+
             <p className="text-lg font-semibold text-center">{member.name}</p>
             <p className="text-sm text-gray-500 text-center">{member.role}</p>
             <button
